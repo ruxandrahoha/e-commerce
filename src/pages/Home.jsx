@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <div className="bg-amber-700">
-      <Title>Home</Title>
+      <Title>Magazin</Title>
       <Link to="/products">Go to Products</Link>
       <input type="text" value={productName} onChange={(e) => setProductName(e.target.value)} />
       <button
