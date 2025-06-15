@@ -43,7 +43,7 @@ export default function Cart() {
           <div className="w-32 flex flex-col items-center">
             <div className="flex items-center space-x-2">
               <button
-                className="bg-gray-300 px-2 rounded"
+                className="bg-gray-300 px-2 rounded cursor-pointer"
                 onClick={() => {
                   if (item.quantity > 1) {
                     updateQuantity(item.id, item.quantity - 1);
@@ -55,7 +55,7 @@ export default function Cart() {
               <input
                 type="number"
                 min="1"
-                className="w-12 text-center border rounded"
+                className="w-10 text-center border rounded"
                 value={item.quantity}
                 onChange={e => {
                   const val = Number(e.target.value);
@@ -63,7 +63,7 @@ export default function Cart() {
                 }}
               />
               <button
-                className="bg-gray-300 px-2 rounded"
+                className="bg-gray-300 px-2 rounded cursor-pointer"
                 onClick={() => updateQuantity(item.id, item.quantity + 1)}
               >
                 +
@@ -77,10 +77,10 @@ export default function Cart() {
 
           <div className="w-16 text-center">
             <button
-              className="bg-red-400 text-white px-3 py-2 rounded-lg hover:bg-red-500"
+              className="bg-red-400 opacity-90 text-white  px-3 py-2 rounded-lg hover:bg-red-500 cursor-pointer"
               onClick={() => removeFromCart(item.id)}
             >
-              X
+              ✕
             </button>
           </div>
         </li>
