@@ -1,25 +1,48 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext } from "react"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-const CartContext = createContext([]);
+const CartContext = createContext(null)
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([])
 
   function addToCart(product) {
-    setCart(prev => [...prev, product]);
-  }
+  setCart(prevCart => {
+    const existingItem = prevCart.find(item => item.id === product.id);
+    if (existingItem) {
+      return prevCart.map(item =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      return [...prevCart, { ...product, quantity: 1 }];
+    }
+  });
 
-  function removeFromCart(productId) {
-    setCart(prev => prev.filter(p => p.id !== productId));
-  }
+  toast.success(`Cartea "${product.title}" a fost adăugată în coș!`);
+}
 
-  return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-      {children}
-    </CartContext.Provider>
+function updateQuantity(productId, newQty) {
+  setCart(prevCart =>
+    prevCart.map(item =>
+      item.id === productId ? { ...item, quantity: newQty } : item
+    )
   );
 }
 
+  function removeFromCart(productId) {
+    setCart(prev => prev.filter(p => p.id !== productId))
+  }
+
+  return (
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
+      {children}
+    </CartContext.Provider>
+  )
+}
+
 export function useCart() {
-  return useContext(CartContext);
+  return useContext(CartContext)
 }
