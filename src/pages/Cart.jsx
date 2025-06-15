@@ -8,7 +8,7 @@ export default function Cart() {
   const totalPrice = cart.reduce((acc, item) => acc + item.price.lei * item.quantity, 0)
 
   if (cart.length === 0) {
-    return <p className="bg-pink-300 max-w-lg rounded-3xl shadow-lg mx-auto text-center p-4 w-full text-4xl font-serif mt-20">Coșul dvs. este gol.</p>;
+    return <p className="bg-blue-300 max-w-sm rounded-3xl shadow-lg mx-auto text-center p-3 w-full text-xl font-serif mt-20">Coșul dvs. este gol.</p>;
   }
 
   return (
@@ -24,7 +24,7 @@ export default function Cart() {
 
       <ul className="space-y-4">
         {cart.map((item) => (
-          <li key={item.id} className="flex items-center border-2 border-pink-300 p-4 rounded-3xl bg-white gap-4">
+          <li key={item.id} className="flex items-center border-2 border-blue-300 p-4 rounded-3xl bg-white gap-4">
           <img
             src={myImage}
             alt={`Coperta cartii ${item.title}`}
