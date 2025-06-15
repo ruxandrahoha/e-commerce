@@ -16,11 +16,10 @@ export default function ProductList() {
           </Link>
             <h2 className="">de {product.author}</h2>
             <div className="flex justify-between pt-4">
-              <p className="text-lg mt-3">{product.price.lei} lei</p>
-              <button className="text-lg bg-pink-200 rounded-4xl p-2 px-4 cursor-pointer hover:bg-pink-300 active:bg-pink-300" onClick={() => addToCart(product)}>Add to cart</button>
+              <p className="text-lg mt-2">{product.price.lei} lei</p>
+              <button className="text-md bg-pink-200 rounded-4xl p-2 px-4 cursor-pointer hover:bg-pink-300 active:bg-pink-300" onClick={() => addToCart(product)}>Add to cart</button>
             </div>
         </div>
-        
     )
   })
 

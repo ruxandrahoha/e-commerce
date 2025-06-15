@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="bg-pink-200 w-full h-full"> 
+    <div className="flex justify-center text-3xl"> 
       Home goes here! 
     </div>
   )
