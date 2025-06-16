@@ -1,11 +1,19 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router"
-import { products } from "../database"
+//import { products } from "../database"
 import { useCart } from "../context/CartContext"
 import myImage from "../assets/temporaryImage.jpeg"
 
+import { fetchProducts } from "../firebase"
+
 export default function ProductList() {
 
+  const [products, setProducts] = useState([]);
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    fetchProducts().then(setProducts);
+  }, []);
 
   const cardElements = products.map(product => {
     return (
@@ -16,7 +24,7 @@ export default function ProductList() {
           </Link>
             <h2 className="">de {product.author}</h2>
             <div className="flex justify-between pt-4">
-              <p className="text-lg mt-2">{product.price.lei} lei</p>
+              <p className="text-lg mt-2">{product.price} lei</p>
               <button className="text-md bg-blue-200 rounded-4xl p-2 px-4 cursor-pointer hover:bg-blue-300 active:bg-blue-300 transition" onClick={() => addToCart(product)}>Add to cart</button>
             </div>
         </div>

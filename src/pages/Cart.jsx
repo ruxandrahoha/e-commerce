@@ -5,7 +5,7 @@ import myImage from "../assets/temporaryImage.jpeg"
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity } = useCart();
 
-  const totalPrice = cart.reduce((acc, item) => acc + item.price.lei * item.quantity, 0)
+  const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
   if (cart.length === 0) {
     return <p className="bg-blue-300 max-w-sm rounded-3xl shadow-lg mx-auto text-center p-3 w-full text-xl font-serif mt-20">Coșul dvs. este gol.</p>;
@@ -37,7 +37,7 @@ export default function Cart() {
           </div>
 
           <div className="w-24 text-center">
-            <p className="font-bold">{item.price.lei} lei</p>
+            <p className="font-bold">{item.price} lei</p>
           </div>
 
           <div className="w-32 flex flex-col items-center">
@@ -72,7 +72,7 @@ export default function Cart() {
           </div>
 
           <div className="w-24 text-center">
-            <p className="font-bold">{item.price.lei * item.quantity} lei</p>
+            <p className="font-bold">{item.price * item.quantity} lei</p>
           </div>
 
           <div className="w-16 text-center">
