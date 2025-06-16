@@ -11,7 +11,9 @@ import Cart from "./pages/Cart"
 import Dashboard from "./pages/Dashboard"
 import NotFound from "./pages/NotFound"
 import { CartProvider } from "./context/CartContext"
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify'
+import AddProduct from "./pages/AddProduct"
+import EditProduct from "./pages/EditProduct"
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -21,13 +23,17 @@ createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/products">
+            <Route path="products">
               <Route index element={<ProductList />} />
               <Route path=":id" element={<ProductDetails />}/>
             </Route>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="dashboard">
+              <Route index element={<Dashboard />} />
+              <Route path="add" element={<AddProduct />} />
+              <Route path="edit/:id" element={<EditProduct />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

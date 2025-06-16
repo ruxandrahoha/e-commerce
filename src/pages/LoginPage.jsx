@@ -3,7 +3,7 @@ import React from "react";
 export default function LoginPage() {
   return (
     <div className="flex justify-center items-center h-full">
-      <div className="w-1/3 h-1/2 border-2 border-blue-300 p-4 rounded-3xl bg-white px-20">
+      <div className="w-1/3 h-2/3 border-2 border-blue-300 p-4 rounded-3xl bg-white px-20">
         <form className="flex flex-col space-y-6 mt-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -31,10 +31,17 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full bg-blue-400 text-white py-2 rounded-xl shadow-lg hover:bg-blue-200 hover:text-black transition"
+            className="w-full mx-auto mb-4 bg-blue-400 text-white py-2 rounded-xl shadow-lg hover:bg-blue-200 hover:text-black transition cursor-pointer"
           >
             Autentificare
           </button>
+          <button
+            type="submit"
+            className="w-full mx-auto bg-blue-400 text-white py-2 rounded-xl shadow-lg hover:bg-blue-200 hover:text-black transition cursor-pointer"
+          >
+            Creare cont
+          </button>
+          <p className="text-center text-gray-600 hover:underline cursor-pointer">Ti-ai uitat parola?</p>
         </form>
         
       </div>

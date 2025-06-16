@@ -1,7 +1,12 @@
 import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
-import { getFirestore } from "firebase/firestore"
-import { collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore, collection, onSnapshot,
+  getDocs, addDoc, deleteDoc, doc,
+  query, where,
+  orderBy, serverTimestamp,
+  updateDoc
+} from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAA512BoGc903K9JatyxQNGhjw8scKqOXU",
@@ -16,17 +21,57 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+const colRef = collection(db, 'products')
 
-export async function fetchProducts() {
+
+export function listenToProducts(setProducts) {
+  const colRef = collection(db, "products");
+  return onSnapshot(
+    colRef,
+    (snapshot) => {
+      const products = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setProducts(products);
+    },
+    (error) => {
+      console.error("Error listening to products:", error);
+    }
+  );
+}
+
+export async function addProduct(product) {
+  addDoc(colRef, {
+    title: product.title,
+    author: product.author,
+    createdAt: serverTimestamp()
+  })
+}
+
+export async function deleteProduct(product) {
   try {
-    const querySnapshot = await getDocs(collection(db, "products"));
-    return querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
+    const docRef = doc(db, "products", product.id)
+    await deleteDoc(docRef);
   } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
+    console.error("Error deleting product:", error)
   }
 }
+
+
+export async function editProduct(product) {
+  const docRef = doc(db, "products", product.id);
+  try {
+    await updateDoc(docRef, {
+      title: product.title,
+      author: product.author,
+      price: product.price,
+      updatedAt: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error("Error updating product:", error);
+  }
+}
+
+
 
