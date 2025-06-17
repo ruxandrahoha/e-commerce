@@ -10,13 +10,13 @@ export default function EditProduct() {
 
   useEffect(() => {
     async function fetchProduct() {
-      const docRef = doc(db, "products", id);
-      const docSnap = await getDoc(docRef);
+      const docRef = doc(db, "products", id)
+      const docSnap = await getDoc(docRef)
       if (docSnap.exists()) {
-        const data = docSnap.data();
-        setProduct({ id: docSnap.id, title: data.title, author: data.author, price: data.price });
+        const data = docSnap.data()
+        setProduct({ id: docSnap.id, title: data.title, author: data.author, price: data.price })
       } else {
-        console.error("No such product!");
+        console.error("No such product!")
       }
     }
 
@@ -24,9 +24,9 @@ export default function EditProduct() {
   }, [id]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await editProduct(product);
-    navigate("/dashboard");
+    e.preventDefault()
+    await editProduct(product)
+    navigate("/dashboard")
   };
 
   return (

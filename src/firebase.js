@@ -17,17 +17,17 @@ const firebaseConfig = {
   appId: "1:360174152454:web:d02b5ef10df5276c068c87"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const auth = getAuth(app)
+export const db = getFirestore(app)
 const colRef = collection(db, 'products')
 
-
 export function listenToProducts(setProducts) {
-  const colRef = collection(db, "products");
+  const productsQuery = query(colRef, orderBy("createdAt", "desc"))
+  
   return onSnapshot(
-    colRef,
+    productsQuery,
     (snapshot) => {
       const products = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -44,7 +44,10 @@ export function listenToProducts(setProducts) {
 export async function addProduct(product) {
   addDoc(colRef, {
     title: product.title,
-    author: product.author,
+    author: product.author || null,
+    price: product.price,
+    category: product.category || "uncategorized",
+    description: product.description || "",
     createdAt: serverTimestamp()
   })
 }

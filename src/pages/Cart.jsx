@@ -8,7 +8,7 @@ export default function Cart() {
   const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
   if (cart.length === 0) {
-    return <p className="bg-blue-300 max-w-sm rounded-3xl shadow-lg mx-auto text-center p-3 w-full text-xl font-serif mt-20">Coșul dvs. este gol.</p>;
+    return <p className="bg-blue-200 max-w-sm rounded-xl shadow-lg mx-auto text-center p-8 w-full text-xl font-serif mt-20">Coșul dvs. este gol.</p>;
   }
 
   return (
@@ -94,6 +94,9 @@ export default function Cart() {
           Preț total: {totalPrice} lei
         </h1>
       </div>
+      <button className="flex justify-center bg-blue-300 rounded-2xl hover:bg-blue-400 hover:text-white transition cursor-pointer m-auto py-2 px-16 text-xl">
+        Plasează comanda
+      </button>
     </div>
   );
 }

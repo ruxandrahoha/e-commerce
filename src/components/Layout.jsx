@@ -28,7 +28,7 @@ export default function Layout() {
                 </nav>
             </header>
 
-            <main className="bg-gradient-to-b from-blue-200 to-blue-50 flex-1 p-4 pb-12">
+            <main className="bg-gradient-to-b from-blue-100 to-blue-200 flex-1 p-4 pb-12">
                 <Outlet />
             </main>
 
