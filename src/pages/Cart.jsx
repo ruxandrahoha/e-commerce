@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { Link } from "react-router"
 import { useCart } from "../context/CartContext"
 import myImage from "../assets/temporaryImage.jpeg"
 
@@ -8,7 +9,14 @@ export default function Cart() {
   const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
   if (cart.length === 0) {
-    return <p className="bg-blue-200 max-w-sm rounded-xl shadow-lg mx-auto text-center p-8 w-full text-xl font-serif mt-20">Coșul dvs. este gol.</p>;
+    return (
+      <div className="max-w-sm mx-auto text-center">
+        <p className="p-8 w-full text-3xl font-serif mt-20">Coșul dvs. este gol.</p>
+        <Link to="/products">
+          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl cursor-pointer">Începeți cumpărăturile</button>
+        </Link>
+      </div>
+    )
   }
 
   return (
@@ -24,11 +32,11 @@ export default function Cart() {
 
       <ul className="space-y-4">
         {cart.map((item) => (
-          <li key={item.id} className="flex items-center border-2 border-blue-300 p-4 rounded-3xl bg-white gap-4">
+          <li key={item.id} className="flex items-center border-2 border-(--secondary) p-4 rounded-4xl bg-white gap-4">
           <img
             src={myImage}
             alt={`Coperta cartii ${item.title}`}
-            className="w-24 h-24 object-cover rounded-md"
+            className="w-24 h-24 object-cover rounded-4xl"
           />
 
           <div className="flex-1 min-w-[150px]">
@@ -77,7 +85,7 @@ export default function Cart() {
 
           <div className="w-16 text-center">
             <button
-              className="bg-red-400 opacity-90 text-white  px-3 py-2 rounded-lg hover:bg-red-500 cursor-pointer"
+              className="bg-red-400 opacity-90 text-white  px-3 py-2 rounded-4xl hover:bg-red-500 cursor-pointer"
               onClick={() => removeFromCart(item.id)}
             >
               ✕
@@ -94,7 +102,7 @@ export default function Cart() {
           Preț total: {totalPrice} lei
         </h1>
       </div>
-      <button className="flex justify-center bg-blue-300 rounded-2xl hover:bg-blue-400 hover:text-white transition cursor-pointer m-auto py-2 px-16 text-xl">
+      <button className="flex justify-center bg-(--secondary) rounded-4xl hover:bg-(--primary) hover:text-white transition cursor-pointer m-auto py-2 px-16 text-xl">
         Plasează comanda
       </button>
     </div>

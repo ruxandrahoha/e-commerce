@@ -6,7 +6,7 @@ import { db, editProduct } from "../firebase"
 export default function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState({ title: "", author: "", price: "" });
+  const [product, setProduct] = useState({ id: "", title: "", author: "", price: NaN });
 
   useEffect(() => {
     async function fetchProduct() {
@@ -30,7 +30,7 @@ export default function EditProduct() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-8 bg-white p-6 rounded-xl shadow-md">
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-8 bg-white p-6 rounded-4xl shadow-md">
       <h2 className="text-2xl font-bold mb-4">Edit Product</h2>
       <input
         className="border p-2 mb-2 w-full"
@@ -54,7 +54,7 @@ export default function EditProduct() {
         onChange={(e) => setProduct({ ...product, price: parseFloat(e.target.value) })}
         required
       />
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <button type="submit" className="bg-(--primary) text-white px-4 py-2 rounded hover:bg-(--primary)">
         Save Changes
       </button>
     </form>

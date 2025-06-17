@@ -44,10 +44,15 @@ export function listenToProducts(setProducts) {
 export async function addProduct(product) {
   addDoc(colRef, {
     title: product.title,
-    author: product.author || null,
+    author: product.author,
+    isbn: product.isbn,
+    publishingHouse: product.publishingHouse || null,
+    publishingYear: product.publishingYear || null,
     price: product.price,
-    category: product.category || "uncategorized",
-    description: product.description || "",
+    category: product.category,
+    description: product.description || null,
+    pageNumber: product.pageNumber,
+    /*image: product.image,*/
     createdAt: serverTimestamp()
   })
 }

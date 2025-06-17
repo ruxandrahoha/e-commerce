@@ -23,7 +23,7 @@ export default function ProductList() {
   };
 
   const cardElements = filteredProducts.map(product => (
-    <div key={product.id} className="w-64 bg-white m-2 p-4 rounded-xl shadow-md">
+    <div key={product.id} className="w-64 bg-white m-2 p-4 rounded-4xl shadow-md">
       <Link to={`/products/${product.id}`}>
         <img className="w-64 h-[250px] object-cover" src={myImage} alt={`Cover of ${product.title}`} />
         <h1 className="font-bold line-clamp-1">{product.title}</h1>
@@ -32,7 +32,7 @@ export default function ProductList() {
       <div className="flex justify-between pt-4">
         <p className="text-lg mt-2">{product.price} lei</p>
         <button
-          className="text-md bg-blue-200 rounded-4xl p-2 px-4 cursor-pointer hover:bg-blue-300 active:bg-blue-300 transition"
+          className="text-md bg-(--primary) rounded-4xl p-2 px-4 cursor-pointer hover:bg-(--secondary) active:bg-(--secondary) transition"
           onClick={() => addToCart(product)}
         >
           Add to cart
@@ -42,31 +42,31 @@ export default function ProductList() {
   ));
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mt-6">
       <div className="flex gap-4">
         <button
           onClick={() => updateFilter("all")}
-          className={`px-4 py-2 rounded-xl ${filter === "all" ? "bg-blue-500 text-white transition" : "bg-blue-200 transition"}`}
+          className={`px-4 py-2 rounded-4xl shadow-md  transition ${filter === "all" ? "bg-(--primary) text-white" : "bg-[#b2a49f] text-black"}`}
         >
           Toate produsele
         </button>
         <button
-          onClick={() => updateFilter("books")}
-          className={`px-4 py-2 rounded-xl ${filter === "books" ? "bg-blue-500 text-white transition" : "bg-blue-200 transition"}`}
+          onClick={() => updateFilter("fictiune")}
+          className={`px-4 py-2 rounded-4xl shadow-md text-white transition ${filter === "fictiune" ? "bg-(--primary)" : "bg-[#b2a49f] text-black"}`}
         >
-          Cărți
+          Ficțiune
         </button>
         <button
-          onClick={() => updateFilter("cassettes")}
-          className={`px-4 py-2 rounded-xl ${filter === "cassettes" ? "bg-blue-500 text-white transition" : "bg-blue-200 transition"}`}
+          onClick={() => updateFilter("poezie")}
+          className={`px-4 py-2 rounded-4xl shadow-md text-white transition ${filter === "poezie" ? "bg-(--primary)" : "bg-[#b2a49f] text-black"}`}
         >
-          Casete
+          Poezie
         </button>
         <button
-          onClick={() => updateFilter("cds")}
-          className={`px-4 py-2 rounded-xl ${filter === "cds" ? "bg-blue-500 text-white transition" : "bg-blue-200 transition"}`}
+          onClick={() => updateFilter("istorie")}
+          className={`px-4 py-2 rounded-4xl shadow-md text-white transition ${filter === "istorie" ? "bg-(--primary)" : "bg-[#928596]"}`}
         >
-          CD-uri
+          Istorie
         </button>
       </div>
       <div className="flex flex-wrap justify-center items-center w-5/6 m-auto">
