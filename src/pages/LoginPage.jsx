@@ -2,7 +2,7 @@ import React from "react";
 
 export default function LoginPage() {
   return (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex justify-center h-full">
       <div className="w-1/3 h-2/3 border-2 border-(--secondary) p-4 rounded-4xl bg-white px-20 shadow-md">
         <form className="flex flex-col space-y-6 mt-6">
           <div>
@@ -12,7 +12,7 @@ export default function LoginPage() {
             <input
               type="email"
               id="email"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md focus:ring-(--primary) focus:border-(--primary)"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
               placeholder="you@example.com"
             />
           </div>
@@ -24,20 +24,20 @@ export default function LoginPage() {
             <input
               type="password"
               id="password"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md focus:ring-(--primary) focus:border-(--primary)"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
               placeholder="••••••••"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full mx-auto mb-4 bg-(--primary) text-white py-2 rounded-4xl shadow-md hover:bg-(--primary) hover:text-black transition cursor-pointer"
+            className="w-full mx-auto mb-4 bg-(--primary) text-white py-2 rounded-4xl shadow-md hover:bg-(--primary-darker) transition cursor-pointer"
           >
             Autentificare
           </button>
           <button
             type="submit"
-            className="w-full mx-auto bg-(--primary) text-white py-2 rounded-4xl shadow-md hover:bg-(--primary) hover:text-black transition cursor-pointer"
+            className="w-full mx-auto bg-(--primary) text-white py-2 rounded-4xl shadow-md hover:bg-(--primary-darker) transition cursor-pointer"
           >
             Creare cont
           </button>

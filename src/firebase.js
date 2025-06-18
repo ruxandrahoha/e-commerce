@@ -2,8 +2,8 @@ import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
 import {
   getFirestore, collection, onSnapshot,
-  getDocs, getDoc, addDoc, deleteDoc, doc,
-  query, where,
+  getDoc, addDoc, deleteDoc, doc,
+  query, where, getDocs,
   orderBy, serverTimestamp,
   updateDoc
 } from 'firebase/firestore'
@@ -22,6 +22,7 @@ const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const db = getFirestore(app)
 const colRef = collection(db, 'products')
+const categoriesRef = collection(db, 'categories')
 
 export function listenToProducts(setProducts) {
   const productsQuery = query(colRef, orderBy("createdAt", "desc"))
@@ -58,6 +59,9 @@ export async function addProduct(product) {
 }
 
 export async function deleteProduct(product) {
+  const confirmDelete = confirm(`Sunteți sigur că ștergeți cartea "${product.title}"?`)
+  if (!confirmDelete) return
+
   try {
     const docRef = doc(db, "products", product.id)
     await deleteDoc(docRef);
@@ -85,14 +89,14 @@ export async function getProductById(id) {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() };
+    return { id: docSnap.id, ...docSnap.data() }
   } else {
-    throw new Error("Product not found");
+    throw new Error("Product not found")
   }
 }
 
-export async function listenToCategories(setCategories) {
-  const categoriesQuery = query(colRef, orderBy("createdAt", "asc"))
+export function listenToCategories(setCategories) {
+  const categoriesQuery = query(categoriesRef, orderBy("createdAt", "asc"))
   
   return onSnapshot(
     categoriesQuery,
@@ -101,7 +105,7 @@ export async function listenToCategories(setCategories) {
         id: doc.id,
         ...doc.data()                                    
       }));
-      setCategories(category);
+      setCategories(category)
     },
     (error) => {
       console.error("Error listening to categories:", error);
@@ -110,15 +114,46 @@ export async function listenToCategories(setCategories) {
 }
 
 export async function addCategory() {
-  console.log("hi")
+  const name = prompt("Numele categoriei noi:")
+  if (!name) return
+  try {
+    await addDoc(categoriesRef, {
+      name,
+      createdAt: serverTimestamp()
+    })
+  } catch (error) {
+    console.error("Error adding category:", error)
+  }
 }
 
-export async function editCategoryName() {
-  console.log("hi")
+export async function editCategoryName(id) {
+  const newName = prompt("Noul nume al categoriei:")
+  if (!newName) return
+  try {
+    const docRef = doc(db, "categories", id)
+    await updateDoc(docRef, { name: newName })
+  } catch (error) {
+    console.error("Error editing category name:", error)
+  }
 }
 
-export async function deleteCategory() {
-  console.log("hi")
+export async function deleteCategory(id, categoryName) {
+  const confirmDelete = confirm(`Sunteți sigur că ștergeți această categorie "${categoryName}"? TOATE cărțile din această categorie vor fi șterse!`)
+  if (!confirmDelete) return
+
+  try {
+    const productsRef = collection(db, "products");
+    const q = query(productsRef, where("category", "==", categoryName));
+    const querySnapshot = await getDocs(q);
+    const batchDeletes = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, "products", docSnap.id)));
+
+    await Promise.all(batchDeletes);
+
+    const docRef = doc(db, "categories", id);
+    await deleteDoc(docRef);
+  } catch (error) {
+    console.error("Error deleting category and its products:", error);
+  }
 }
 
 

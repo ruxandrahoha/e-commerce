@@ -11,36 +11,41 @@ import Cart from "./pages/Cart"
 import Checkout from "./pages/Checkout"
 import Dashboard from "./pages/Dashboard"
 import NotFound from "./pages/NotFound"
-import { CartProvider } from "./context/CartContext"
-import { ToastContainer } from 'react-toastify'
 import AddProduct from "./pages/AddProduct"
 import EditProduct from "./pages/EditProduct"
+import { CartProvider } from "./context/CartContext"
+import { CategoriesProvider } from "./context/CategoriesContext"
+import { ToastContainer } from 'react-toastify'
+
+
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <CartProvider>
-      <ToastContainer position="bottom-right" autoClose={2500} />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="products">
-              <Route index element={<ProductList />} />
-              <Route path=":id" element={<ProductDetails />}/>
+      <CategoriesProvider>
+        <ToastContainer position="bottom-right" autoClose={2500} />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="products">
+                <Route index element={<ProductList />} />
+                <Route path=":id" element={<ProductDetails />}/>
+              </Route>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="dashboard">
+                <Route index element={<Dashboard />} />
+                <Route path="add" element={<AddProduct />} />
+                <Route path="edit/:id" element={<EditProduct />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
             </Route>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="dashboard">
-              <Route index element={<Dashboard />} />
-              <Route path="add" element={<AddProduct />} />
-              <Route path="edit/:id" element={<EditProduct />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </CategoriesProvider>
     </CartProvider>
   </StrictMode>
 );

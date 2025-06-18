@@ -3,11 +3,14 @@ import { Link, useSearchParams } from "react-router"
 import { useCart } from "../context/CartContext"
 import myImage from "../assets/temporaryImage.jpeg"
 import { listenToProducts } from "../firebase"
+import { useCategories } from "../context/CategoriesContext"
+import GoBackBtn from "../components/GoBackBtn"
 
 export default function ProductList() {
   const [products, setProducts] = useState([])
   const [searchParams, setSearchParams] = useSearchParams()
-  const [loading, setLoading] = useState(true)
+  const [productsLoading, setProductsLoading] = useState(true)
+  const { categories, loading: categoriesLoading } = useCategories()
   const { addToCart } = useCart()
 
   const filter = searchParams.get("filter") || "all"
@@ -15,20 +18,39 @@ export default function ProductList() {
   useEffect(() => {
     const unsubscribe = listenToProducts((products) => {
       setProducts(products)
-      setLoading(false)
+      setProductsLoading(false)
     })
 
     return () => unsubscribe()
   }, [])
 
-  const filteredProducts = filter === "all" ? products : products.filter((product) => product.category === filter)
+  const isValidFilter = filter === "all" || categories.some(category => category.name === filter)
+  const filteredProducts = isValidFilter 
+    ? (filter === "all" ? products : products.filter(product => product.category === filter))
+    : []
 
   function updateFilter(value) {
-    setSearchParams(value === "all" ? {} : { filter: value })
-  };
+    if (!value || value === "all") {
+      setSearchParams({})
+    } else {
+      setSearchParams({ filter: value })
+    }
+  }
+
+  const categoryElements = categories.map(category => {
+      return (
+        <button
+            key={category.id}
+            onClick={() => updateFilter(category.name)}
+            className={`px-4 py-2 rounded-4xl shadow-md text-(--secondary) cursor-pointer transition hover:bg-(--primary-darker) ${filter === category.name ? "bg-(--primary-darker) " : "bg-(--primary)"}`}
+          >
+            {category.name}
+          </button>
+      )
+    })
 
   const cardElements = filteredProducts.map(product => (
-    <div key={product.id} className="max-w-74 bg-white m-2 p-6 rounded-4xl shadow-md">
+    <div key={product.id} className="max-w-74 bg-white m-2 p-6 rounded-4xl shadow-md hover:shadow-lg/25">
       <Link to={`/products/${product.id}`}>
         <img className="w-52 h-[200px] object-cover" src={myImage} alt={`Cover of ${product.title}`} />
         <h1 className="font-bold line-clamp-1">{product.title}</h1>
@@ -44,7 +66,24 @@ export default function ProductList() {
         </button>
       </div>
     </div>
-  ));
+  ))
+
+ if (productsLoading  || categoriesLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
+
+  if (!isValidFilter) {
+    return (
+      <div className="flex flex-col justify-center items-center p-8 w-full text-2xl font-serif mt-20">
+        Această categorie nu există!
+        <GoBackBtn className="bg-(--primary) text-(--secondary) text-lg mt-4 hover:bg-(--primary-darker) cursor-pointer transition p-2 rounded-4xl"/>
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col items-center">
@@ -55,36 +94,15 @@ export default function ProductList() {
         >
           Toate produsele
         </button>
-        <button
-          onClick={() => updateFilter("fictiune")}
-          className={`px-4 py-2 rounded-4xl shadow-md text-(--secondary) cursor-pointer transition hover:bg-(--primary-darker) ${filter === "fictiune" ? "bg-(--primary-darker) " : "bg-(--primary)"}`}
-        >
-          Ficțiune
-        </button>
-        <button
-          onClick={() => updateFilter("poezie")}
-          className={`px-4 py-2 rounded-4xl shadow-md text-(--secondary) cursor-pointer transition hover:bg-(--primary-darker) ${filter === "poezie" ? "bg-(--primary-darker) " : "bg-(--primary)"}`}
-        >
-          Poezie
-        </button>
-        <button
-          onClick={() => updateFilter("istorie")}
-          className={`px-4 py-2 rounded-4xl shadow-md text-(--secondary) cursor-pointer transition hover:bg-(--primary-darker) ${filter === "istorie" ? "bg-(--primary-darker) " : "bg-(--primary)"}`}
-        >
-          Istorie
-        </button>
+
+        {categoryElements}
       </div>
 
-      { 
-        loading 
-        ? <div className="flex justify-center items-center h-64">
-          <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
-        </div>
-        : <div className="flex flex-wrap justify-center items-center w-5/6 m-auto">
+      <div className="flex flex-col items-center">
+        <div className="flex flex-wrap justify-center items-center w-5/6 m-auto">
           {cardElements}
         </div>
-      }
-
+      </div>
     </div>
   );
 }

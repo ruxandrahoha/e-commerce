@@ -2,34 +2,44 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import { addProduct } from "../firebase"
 import GoBackBtn from "../components/GoBackBtn"
+import { useCategories } from "../context/CategoriesContext"
 
 export default function AddProduct() {
- const [product, setProduct] = useState({
-  title: "",
-  author: "",
-  isbn: "",
-  category: "",
-  publishingHouse: "",
-  publishingYear: "",
-  price: "",
-  description: "",
-  pageNumber: "",
-  image: null
-})
+  const { categories, loading: categoriesLoading } = useCategories()
+  const [product, setProduct] = useState({
+    title: "",
+    author: "",
+    isbn: "",
+    category: "",
+    publishingHouse: "",
+    publishingYear: "",
+    price: "",
+    description: "",
+    pageNumber: "",
+    image: null
+  })
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const productToSubmit = {
-    ...product,
-    isbn: parseFloat(product.isbn),
-    price: parseFloat(product.price),
-    publishingYear: parseInt(product.publishingYear),
-    pageNumber: parseInt(product.pageNumber),
-  };
+      ...product,
+      isbn: parseFloat(product.isbn),
+      price: parseFloat(product.price),
+      publishingYear: parseInt(product.publishingYear),
+      pageNumber: parseInt(product.pageNumber),
+    }
     await addProduct(productToSubmit) // You'll update this to also upload the image
     navigate("/dashboard")
-  };
+  }
+
+  if (categoriesLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex justify-center items-start">
@@ -79,9 +89,11 @@ export default function AddProduct() {
             required
           >
             <option disabled value=""></option>
-            <option value="fictiune">Ficțiune</option>
-            <option value="poezie">Poezie</option>
-            <option value="istorie">Istorie</option>
+            {categories.map(category => {
+              return (
+                <option key={category.id} value={category.name}>{category.name}</option>
+              )
+            })}
           </select>
         </label>
 

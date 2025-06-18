@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link } from "react-router"
 import { useCart } from "../context/CartContext"
 import myImage from "../assets/temporaryImage.jpeg"
@@ -11,7 +11,7 @@ export default function Cart() {
       <div className="max-w-sm mx-auto text-center">
         <p className="p-8 w-full text-3xl font-serif mt-20">Coșul dvs. este gol.</p>
         <Link to="/products">
-          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl cursor-pointer">Începe cumpărăturile</button>
+          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl hover:bg-(--primary-darker) cursor-pointer">Începe cumpărăturile</button>
         </Link>
       </div>
     )
