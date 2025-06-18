@@ -11,7 +11,7 @@ export default function Cart() {
       <div className="max-w-sm mx-auto text-center">
         <p className="p-8 w-full text-3xl font-serif mt-20">Coșul dvs. este gol.</p>
         <Link to="/products">
-          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl cursor-pointer">Începeți cumpărăturile</button>
+          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl cursor-pointer">Începe cumpărăturile</button>
         </Link>
       </div>
     )

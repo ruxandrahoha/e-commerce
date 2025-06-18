@@ -38,7 +38,7 @@ export function listenToProducts(setProducts) {
     (error) => {
       console.error("Error listening to products:", error);
     }
-  );
+  )
 }
 
 export async function addProduct(product) {
@@ -66,7 +66,6 @@ export async function deleteProduct(product) {
   }
 }
 
-
 export async function editProduct(product) {
   const docRef = doc(db, "products", product.id);
   try {
@@ -92,5 +91,34 @@ export async function getProductById(id) {
   }
 }
 
+export async function listenToCategories(setCategories) {
+  const categoriesQuery = query(colRef, orderBy("createdAt", "asc"))
+  
+  return onSnapshot(
+    categoriesQuery,
+    (snapshot) => {
+      const category = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()                                    
+      }));
+      setCategories(category);
+    },
+    (error) => {
+      console.error("Error listening to categories:", error);
+    }
+  )
+}
+
+export async function addCategory() {
+  console.log("hi")
+}
+
+export async function editCategoryName() {
+  console.log("hi")
+}
+
+export async function deleteCategory() {
+  console.log("hi")
+}
 
 
