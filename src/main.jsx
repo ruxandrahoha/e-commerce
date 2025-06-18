@@ -8,12 +8,14 @@ import ProductList from "./pages/ProductList"
 import ProductDetails from "./pages/ProductDetails"
 import LoginPage from "./pages/LoginPage"
 import Cart from "./pages/Cart"
+import Checkout from "./pages/Checkout"
 import Dashboard from "./pages/Dashboard"
 import NotFound from "./pages/NotFound"
 import { CartProvider } from "./context/CartContext"
 import { ToastContainer } from 'react-toastify'
 import AddProduct from "./pages/AddProduct"
 import EditProduct from "./pages/EditProduct"
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -29,6 +31,7 @@ createRoot(document.getElementById("root")).render(
             </Route>
             <Route path="login" element={<LoginPage />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
             <Route path="dashboard">
               <Route index element={<Dashboard />} />
               <Route path="add" element={<AddProduct />} />

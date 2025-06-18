@@ -3,7 +3,7 @@ import React from "react";
 export default function LoginPage() {
   return (
     <div className="flex justify-center items-center h-full">
-      <div className="w-1/3 h-2/3 border-2 border-(--secondary) p-4 rounded-4xl bg-white px-20">
+      <div className="w-1/3 h-2/3 border-2 border-(--secondary) p-4 rounded-4xl bg-white px-20 shadow-md">
         <form className="flex flex-col space-y-6 mt-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">

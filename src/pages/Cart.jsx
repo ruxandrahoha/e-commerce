@@ -4,9 +4,7 @@ import { useCart } from "../context/CartContext"
 import myImage from "../assets/temporaryImage.jpeg"
 
 export default function Cart() {
-  const { cart, removeFromCart, updateQuantity } = useCart();
-
-  const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
 
   if (cart.length === 0) {
     return (
@@ -85,7 +83,7 @@ export default function Cart() {
 
           <div className="w-16 text-center">
             <button
-              className="bg-red-400 opacity-90 text-white  px-3 py-2 rounded-4xl hover:bg-red-500 cursor-pointer"
+              className="bg-(--red) text-white px-3 py-2 rounded-4xl hover:bg-red-500 cursor-pointer"
               onClick={() => removeFromCart(item.id)}
             >
               ✕
@@ -95,16 +93,18 @@ export default function Cart() {
         ))}
       </ul>
       <div>
-        <h1 className="text-2xl font-bold mb-2 text-right mt-6">
+        <h1 className="text-xl font-semibold mb-1 text-right mt-6">
           Preț fără TVA: {Math.round(totalPrice/1.19*100)/100} lei
         </h1>
-        <h1 className="text-2xl font-bold text-right">
+        <h1 className="text-xl font-semibold mb-5 text-right">
           Preț total: {totalPrice} lei
         </h1>
       </div>
-      <button className="flex justify-center bg-(--secondary) rounded-4xl hover:bg-(--primary) hover:text-white transition cursor-pointer m-auto py-2 px-16 text-xl">
-        Plasează comanda
-      </button>
+      <Link to="/checkout">
+        <button className="flex justify-center bg-(--primary) rounded-4xl hover:bg-(--primary-darker) text-(--secondary) transition cursor-pointer m-auto py-2 px-16 text-xl">
+          Plasează comanda
+        </button>
+      </Link>
     </div>
   );
 }

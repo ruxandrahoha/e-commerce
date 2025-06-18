@@ -6,9 +6,10 @@ import { useCart } from "../context/CartContext"
 
 export default function Layout() {
     const { cart } = useCart();
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     return (
-        <div className="flex flex-col h-screen bg-(--secondary)">
+        <div className="flex flex-col h-screen">
 
             <header className="bg-(--primary) flex justify-between items-center text-md px-4 shadow-md h-16">
                 <Link className="text-(--secondary) text-xl font-semibold ml-20 hover:underline" to="/">Nume Librărie</Link>
@@ -17,7 +18,7 @@ export default function Layout() {
                         Produse
                     </NavLink>
                     <NavLink className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:underline" to="/cart">
-                        Coș de cumpărături{cart.length > 0 && ` (${cart.length})`}
+                        Coș de cumpărături{cart.length > 0 && <span className="bg-(--red) rounded-4xl ml-3 px-3 py-1 text-md hover:no-underline hover:decoration-transparent">{totalQuantity}</span>}
                     </NavLink>
                     <NavLink className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:underline" to="/login">
                         Autentificare
@@ -28,11 +29,11 @@ export default function Layout() {
                 </nav>
             </header>
 
-            <main className="flex-1 mx-52">
+            <main className="flex-1 px-30 pt-8 pb-16 bg-(--secondary)">
                 <Outlet />
             </main>
 
-            <footer className="bg-(--primary) text-white text-center p-8">
+            <footer className="bg-(--primary) text-white text-center p-6">
                 <p className="">© Ruxandra Hoha 2025</p>
             </footer>
 

@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { addProduct } from "../firebase";
+import { useState } from "react"
+import { useNavigate } from "react-router"
+import { addProduct } from "../firebase"
+import GoBackBtn from "../components/GoBackBtn"
 
 export default function AddProduct() {
  const [product, setProduct] = useState({
@@ -15,7 +16,7 @@ export default function AddProduct() {
   pageNumber: "",
   image: null
 })
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,14 +32,8 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="flex justify-center items-start my-8">
-      <button
-        type="button"
-        onClick={() => navigate(-1)}
-        className="bg-white text-black rounded-4xl mr-2 px-4 py-2 shadow hover:bg-(--primary) hover:text-white cursor-pointer"
-      >
-        ← Back
-      </button>
+    <div className="flex justify-center items-start">
+      <GoBackBtn className="bg-white text-black rounded-4xl mr-2 px-4 py-2 shadow hover:bg-(--primary) hover:text-white cursor-pointer" />
 
       <form onSubmit={handleSubmit} className="w-xl bg-white p-6 rounded-4xl shadow-md">
         <div className="flex justify-center">
@@ -84,9 +79,9 @@ export default function AddProduct() {
             required
           >
             <option disabled value=""></option>
-            <option value="books">Ficțiune</option>
-            <option value="cassettes">Poezie</option>
-            <option value="cds">Istorie</option>
+            <option value="fictiune">Ficțiune</option>
+            <option value="poezie">Poezie</option>
+            <option value="istorie">Istorie</option>
           </select>
         </label>
 

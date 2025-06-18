@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
 import {
   getFirestore, collection, onSnapshot,
-  getDocs, addDoc, deleteDoc, doc,
+  getDocs, getDoc, addDoc, deleteDoc, doc,
   query, where,
   orderBy, serverTimestamp,
   updateDoc
@@ -78,6 +78,17 @@ export async function editProduct(product) {
     });
   } catch (error) {
     console.error("Error updating product:", error);
+  }
+}
+
+export async function getProductById(id) {
+  const docRef = doc(db, "products", id)
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  } else {
+    throw new Error("Product not found");
   }
 }
 

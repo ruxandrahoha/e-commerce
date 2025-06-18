@@ -36,8 +36,10 @@ function updateQuantity(productId, newQty) {
     setCart(prev => prev.filter(p => p.id !== productId))
   }
 
+  const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, totalPrice }}>
       {children}
     </CartContext.Provider>
   )
