@@ -86,7 +86,7 @@ export default function ProductList() {
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mx-20">
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => updateFilter("all")}
@@ -99,7 +99,7 @@ export default function ProductList() {
       </div>
 
       <div className="flex flex-col items-center">
-        <div className="flex flex-wrap justify-center items-center w-5/6 m-auto">
+        <div className="flex flex-wrap justify-center items-center">
           {cardElements}
         </div>
       </div>
