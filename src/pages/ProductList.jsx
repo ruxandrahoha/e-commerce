@@ -50,7 +50,7 @@ export default function ProductList() {
     })
 
   const cardElements = filteredProducts.map(product => (
-    <div key={product.id} className="max-w-74 bg-white m-2 p-6 rounded-4xl shadow-md hover:shadow-lg/25">
+    <div key={product.id} className="bg-white m-2 p-6 rounded-4xl shadow-md hover:shadow-lg/25">
       <Link to={`/products/${product.id}`}>
         <img className="w-52 h-[200px] object-cover" src={myImage} alt={`Cover of ${product.title}`} />
         <h1 className="font-bold line-clamp-1">{product.title}</h1>
