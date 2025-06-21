@@ -100,7 +100,11 @@ export default function ProductList() {
 
       <div className="flex flex-col items-center">
         <div className="flex flex-wrap justify-center items-center">
-          {cardElements}
+          {filteredProducts.length === 0 ? (
+            <p className="text-xl font-serif mt-8">Ne pare rău, nu există produse în această categorie.</p>
+          ) : (
+            cardElements
+          )}
         </div>
       </div>
     </div>

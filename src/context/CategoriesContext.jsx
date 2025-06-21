@@ -13,7 +13,7 @@ export function CategoriesProvider({ children }) {
       setLoading(false)
     })
 
-    return () => unsubscribe?.();
+    return () => unsubscribe?.()
   }, [])
 
   return (
@@ -24,5 +24,5 @@ export function CategoriesProvider({ children }) {
 }
 
 export function useCategories() {
-  return useContext(CategoriesContext);
+  return useContext(CategoriesContext)
 }

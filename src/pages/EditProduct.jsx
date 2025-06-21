@@ -82,8 +82,8 @@ export default function EditProduct() {
           <h2 className="text-xl font-medium mb-4">Editează cartea</h2>
         </div>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">Titlu*</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">Titlu*</span>
           <input
             className="border border-(--primary) p-1 w-full rounded"
             value={product.title}
@@ -92,30 +92,30 @@ export default function EditProduct() {
           />
         </label>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">Autor*</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">Autor*</span>
           <input
-            className="border p-1 w-full rounded"
+            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.author}
             onChange={(e) => setProduct({ ...product, author: e.target.value })}
             required
           />
         </label>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">ISBN*</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">ISBN*</span>
           <input
-            className="border p-1 w-full rounded"
+            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.isbn}
             onChange={(e) => setProduct({ ...product, isbn: e.target.value })}
             required
           />
         </label>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">Categorie*</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">Categorie*</span>
           <select
-            className="border p-1 w-full rounded"
+            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.category}
             onChange={(e) => setProduct({ ...product, category: e.target.value })}
             required
@@ -129,10 +129,10 @@ export default function EditProduct() {
           </select>
         </label>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">Preț* (RON)</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">Preț* (RON)</span>
           <input
-            className="border p-1 w-full rounded"
+            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             type="number"
             value={product.price}
             onChange={(e) => setProduct({ ...product, price: e.target.value })}
@@ -140,37 +140,37 @@ export default function EditProduct() {
           />
         </label>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">Editură</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">Editură</span>
           <input
-            className="border p-1 w-full rounded"
+            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.publishingHouse}
             onChange={(e) => setProduct({ ...product, publishingHouse: e.target.value })}
           />
         </label>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">Nr. pagini</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">Nr. pagini</span>
           <input
-            className="border p-1 w-full rounded"
+            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.pageNumber}
             onChange={(e) => setProduct({ ...product, pageNumber: e.target.value })}
           />
         </label>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">Anul publicării</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">Anul publicării</span>
           <input
-            className="border p-1 w-full rounded"
+            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.publishingYear}
             onChange={(e) => setProduct({ ...product, publishingYear: e.target.value })}
           />
         </label>
 
-        <label className="block mb-3">
-          <span className="block font-medium mb-1">Descriere</span>
+        <label className=" mb-3">
+          <span className=" font-medium mb-1">Descriere</span>
           <textarea
-            className="border p-1 w-full rounded"
+            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.description}
             onChange={(e) => setProduct({ ...product, description: e.target.value })}
           />

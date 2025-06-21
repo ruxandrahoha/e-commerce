@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app"
-import { getAuth } from "firebase/auth"
 import {
   getFirestore, collection, onSnapshot,
   getDoc, addDoc, deleteDoc, doc,
@@ -7,6 +6,12 @@ import {
   orderBy, serverTimestamp,
   updateDoc
 } from 'firebase/firestore'
+import {
+  getAuth,
+  createUserWithEmailAndPassword, updateProfile,
+  signInWithEmailAndPassword, signOut,
+  onAuthStateChanged
+} from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAA512BoGc903K9JatyxQNGhjw8scKqOXU",
@@ -34,10 +39,10 @@ export function listenToProducts(setProducts) {
         id: doc.id,
         ...doc.data()
       }));
-      setProducts(products);
+      setProducts(products)
     },
     (error) => {
-      console.error("Error listening to products:", error);
+      console.error("Error listening to products:", error)
     }
   )
 }
@@ -64,29 +69,29 @@ export async function deleteProduct(product) {
 
   try {
     const docRef = doc(db, "products", product.id)
-    await deleteDoc(docRef);
+    await deleteDoc(docRef)
   } catch (error) {
     console.error("Error deleting product:", error)
   }
 }
 
 export async function editProduct(product) {
-  const docRef = doc(db, "products", product.id);
+  const docRef = doc(db, "products", product.id)
   try {
     await updateDoc(docRef, {
       title: product.title,
       author: product.author,
       price: product.price,
       updatedAt: serverTimestamp(),
-    });
+    })
   } catch (error) {
-    console.error("Error updating product:", error);
+    console.error("Error updating product:", error)
   }
 }
 
 export async function getProductById(id) {
   const docRef = doc(db, "products", id)
-  const docSnap = await getDoc(docRef);
+  const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
     return { id: docSnap.id, ...docSnap.data() }
@@ -153,6 +158,35 @@ export async function deleteCategory(id, categoryName) {
     await deleteDoc(docRef);
   } catch (error) {
     console.error("Error deleting category and its products:", error);
+  }
+}
+
+export async function registerUser({ name, email, password }) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    const user = userCredential.user
+    await updateProfile(user, {
+      displayName: name
+    })
+    
+    console.log("User created:", user)
+    console.log("Display name set:", user.displayName)
+    return true
+    
+  } catch (error) {
+    console.error("Registration error:", error.message)
+    return false
+  }
+}
+
+export async function loginUser({ email, password }) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log("Logged in as:", userCredential.user);
+    return true;
+  } catch (error) {
+    console.error("Login error:", error.message);
+    return false;
   }
 }
 

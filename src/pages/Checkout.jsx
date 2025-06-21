@@ -121,7 +121,7 @@ export default function Checkout() {
 
                     </label>
                     <Link to="">
-                        <button className="block bg-(--primary) text-(--secondary) p-4 rounded-4xl hover:bg-(--primary-darker) cursor-pointer">
+                        <button className=" bg-(--primary) text-(--secondary) p-4 rounded-4xl hover:bg-(--primary-darker) cursor-pointer">
                             Mergi către plată
                         </button>
                     </Link>

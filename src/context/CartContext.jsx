@@ -9,7 +9,7 @@ export function CartProvider({ children }) {
 
   function addToCart(product) {
   setCart(prevCart => {
-    const existingItem = prevCart.find(item => item.id === product.id);
+    const existingItem = prevCart.find(item => item.id === product.id)
     if (existingItem) {
       return prevCart.map(item =>
         item.id === product.id
@@ -17,11 +17,11 @@ export function CartProvider({ children }) {
           : item
       );
     } else {
-      return [...prevCart, { ...product, quantity: 1 }];
+      return [...prevCart, { ...product, quantity: 1 }]
     }
   });
 
-  toast.success(`Cartea "${product.title}" a fost adăugată în coș!`);
+  toast.success(`Cartea "${product.title}" a fost adăugată în coș!`)
 }
 
 function updateQuantity(productId, newQty) {
