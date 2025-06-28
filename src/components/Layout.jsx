@@ -35,7 +35,7 @@ export default function Layout() {
                         loggedUser ? (
                             <>
                                 <span className="px-4 py-2 text-green-300 mx-2">Bun venit, {loggedUser.displayName}!</span>
-                                <button className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:underline" onClick={logout}>Deconectare</button>
+                                <button className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:underline cursor-pointer" onClick={logout}>Deconectare</button>
                             </>
                         ) : (
                         <NavLink className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:underline" to="/login">

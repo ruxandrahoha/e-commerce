@@ -1,11 +1,18 @@
-import { createContext, useState, useContext } from "react"
+import { createContext, useState, useContext, useEffect } from "react"
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const CartContext = createContext(null)
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart")
+    return savedCart ? JSON.parse(savedCart) : []
+  })
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart))
+  }, [cart])
 
   function addToCart(product) {
   setCart(prevCart => {
