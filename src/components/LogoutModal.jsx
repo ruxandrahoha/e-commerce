@@ -1,4 +1,9 @@
-import { Dialog, DialogPanel, DialogTitle, Description } from "@headlessui/react"
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Description,
+} from "@headlessui/react";
 
 export default function LogoutModal({ isOpen, onClose, onConfirm }) {
   return (
@@ -30,5 +35,5 @@ export default function LogoutModal({ isOpen, onClose, onConfirm }) {
         </DialogPanel>
       </div>
     </Dialog>
-  )
+  );
 }

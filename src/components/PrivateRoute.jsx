@@ -1,12 +1,12 @@
-import { useAuth } from "../context/AuthContext"
-import { Navigate } from "react-router"
+import { useAuth } from "../context/AuthContext";
+import { Navigate, Outlet } from "react-router";
 
-export default function PrivateRoute({ children }) {
-  const { loggedUser } = useAuth()
+export default function PrivateRoute() {
+  const { loggedUser } = useAuth();
 
-  if (!loggedUser) {
-    return <Navigate to="/login" />
+  if (!loggedUser.isAdmin) {
+    return <Navigate to="/login" />;
   }
 
-  return children
+  return <Outlet />;
 }

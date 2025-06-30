@@ -1,7 +1,7 @@
-import React from "react"
-import { Link } from "react-router"
-import { useCart } from "../context/CartContext"
-import myImage from "../assets/temporaryImage.jpeg"
+import React from "react";
+import { Link } from "react-router";
+import { useCart } from "../context/CartContext";
+import myImage from "../assets/temporaryImage.jpeg";
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
@@ -9,20 +9,28 @@ export default function Cart() {
   if (cart.length === 0) {
     return (
       <div className="max-w-sm mx-auto text-center">
-        <p className="p-8 w-full text-3xl font-serif mt-20">Coșul dvs. este gol.</p>
+        <p className="p-8 w-full text-3xl font-serif mt-20">
+          Coșul dvs. este gol.
+        </p>
         <Link to="/products">
-          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl hover:bg-(--primary-darker) cursor-pointer">Începe cumpărăturile</button>
+          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl hover:bg-(--primary-darker) cursor-pointer">
+            Începe cumpărăturile
+          </button>
         </Link>
       </div>
-    )
+    );
   }
 
   return (
     <div className="max-w-4xl mx-auto p-4">
       <div className="flex items-center gap-4 mb-4 px-4">
         <div className="w-24 h-6" />
-        <div className="flex-1 min-w-[150px] font-bold text-gray-700 ml-12">Produs</div>
-        <div className="w-24 text-center text-sm text-gray-500">preț unitar</div>
+        <div className="flex-1 min-w-[150px] font-bold text-gray-700 ml-12">
+          Produs
+        </div>
+        <div className="w-24 text-center text-sm text-gray-500">
+          preț unitar
+        </div>
         <div className="w-32 text-center text-sm text-gray-500">cantitate</div>
         <div className="w-24 text-center text-sm text-gray-500">total</div>
         <div className="w-16" />
@@ -30,71 +38,74 @@ export default function Cart() {
 
       <ul className="space-y-4">
         {cart.map((item) => (
-          <li key={item.id} className="flex items-center border-2 border-(--secondary) p-4 rounded-4xl bg-white gap-4">
-          <img
-            src={myImage}
-            alt={`Coperta cartii ${item.title}`}
-            className="w-24 h-24 object-cover rounded-4xl"
-          />
+          <li
+            key={item.id}
+            className="flex items-center border-2 border-(--secondary) p-4 rounded-4xl bg-white gap-4"
+          >
+            <img
+              src={myImage}
+              alt={`Coperta cartii ${item.title}`}
+              className="w-24 h-24 object-cover rounded-4xl"
+            />
 
-          <div className="flex-1 min-w-[150px]">
-            <h2 className="text-lg font-semibold">{item.title}</h2>
-            <p className="text-sm text-gray-600">de {item.author}</p>
-          </div>
+            <div className="flex-1 min-w-[150px]">
+              <h2 className="text-lg font-semibold">{item.title}</h2>
+              <p className="text-sm text-gray-600">de {item.author}</p>
+            </div>
 
-          <div className="w-24 text-center">
-            <p className="font-bold">{item.price} lei</p>
-          </div>
+            <div className="w-24 text-center">
+              <p className="font-bold">{item.price} lei</p>
+            </div>
 
-          <div className="w-32 flex flex-col items-center">
-            <div className="flex items-center space-x-2">
+            <div className="w-32 flex flex-col items-center">
+              <div className="flex items-center space-x-2">
+                <button
+                  className="bg-gray-300 px-2 rounded cursor-pointer"
+                  onClick={() => {
+                    if (item.quantity > 1) {
+                      updateQuantity(item.id, item.quantity - 1);
+                    }
+                  }}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  min="1"
+                  className="w-10 text-center border rounded"
+                  value={item.quantity}
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
+                    if (val >= 1) updateQuantity(item.id, val);
+                  }}
+                />
+                <button
+                  className="bg-gray-300 px-2 rounded cursor-pointer"
+                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className="w-24 text-center">
+              <p className="font-bold">{item.price * item.quantity} lei</p>
+            </div>
+
+            <div className="w-16 text-center">
               <button
-                className="bg-gray-300 px-2 rounded cursor-pointer"
-                onClick={() => {
-                  if (item.quantity > 1) {
-                    updateQuantity(item.id, item.quantity - 1);
-                  }
-                }}
+                className="bg-(--red) text-white px-3 py-2 rounded-4xl hover:bg-red-500 cursor-pointer"
+                onClick={() => removeFromCart(item.id)}
               >
-                -
-              </button>
-              <input
-                type="number"
-                min="1"
-                className="w-10 text-center border rounded"
-                value={item.quantity}
-                onChange={e => {
-                  const val = Number(e.target.value);
-                  if (val >= 1) updateQuantity(item.id, val);
-                }}
-              />
-              <button
-                className="bg-gray-300 px-2 rounded cursor-pointer"
-                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-              >
-                +
+                ✕
               </button>
             </div>
-          </div>
-
-          <div className="w-24 text-center">
-            <p className="font-bold">{item.price * item.quantity} lei</p>
-          </div>
-
-          <div className="w-16 text-center">
-            <button
-              className="bg-(--red) text-white px-3 py-2 rounded-4xl hover:bg-red-500 cursor-pointer"
-              onClick={() => removeFromCart(item.id)}
-            >
-              ✕
-            </button>
-          </div>
-        </li>
+          </li>
         ))}
       </ul>
       <div>
         <h1 className="text-xl font-semibold mb-1 text-right mt-6">
-          Preț fără TVA: {Math.round(totalPrice/1.19*100)/100} lei
+          Preț fără TVA: {Math.round((totalPrice / 1.19) * 100) / 100} lei
         </h1>
         <h1 className="text-xl font-semibold mb-5 text-right">
           Preț total: {totalPrice} lei

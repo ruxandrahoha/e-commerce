@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router"
-import { doc, getDoc } from "firebase/firestore"
-import { db, editProduct } from "../firebase"
-import GoBackBtn from "../components/GoBackBtn"
-import { useCategories } from "../context/CategoriesContext"
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
+import { doc, getDoc } from "firebase/firestore";
+import { db, editProduct } from "../firebase";
+import GoBackBtn from "../components/GoBackBtn";
+import { useCategories } from "../context/CategoriesContext";
 
 export default function EditProduct() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const { categories, loading: categoriesLoading } = useCategories()
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { categories, loading: categoriesLoading } = useCategories();
   const [product, setProduct] = useState({
     id: "",
     title: "",
@@ -20,15 +20,15 @@ export default function EditProduct() {
     price: "",
     description: "",
     pageNumber: "",
-    image: null
-  })
+    image: null,
+  });
 
   useEffect(() => {
     async function fetchProduct() {
-      const docRef = doc(db, "products", id)
-      const docSnap = await getDoc(docRef)
+      const docRef = doc(db, "products", id);
+      const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        const data = docSnap.data()
+        const data = docSnap.data();
         setProduct({
           id: docSnap.id,
           title: data.title || "",
@@ -40,18 +40,18 @@ export default function EditProduct() {
           price: data.price || "",
           description: data.description || "",
           pageNumber: data.pageNumber || "",
-          image: null // leave null, unless you implement image preview/reupload
-        })
+          image: null, // leave null, unless you implement image preview/reupload
+        });
       } else {
-        console.error("No such product!")
+        console.error("No such product!");
       }
     }
 
-    fetchProduct()
-  }, [id])
+    fetchProduct();
+  }, [id]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const updatedProduct = {
       ...product,
@@ -59,25 +59,28 @@ export default function EditProduct() {
       price: parseFloat(product.price),
       publishingYear: parseInt(product.publishingYear),
       pageNumber: parseInt(product.pageNumber),
-    }
+    };
 
-    await editProduct(updatedProduct)
-    navigate("/dashboard")
-  }
+    await editProduct(updatedProduct);
+    navigate("/dashboard");
+  };
 
   if (categoriesLoading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="flex justify-center items-start">
       <GoBackBtn className="bg-white text-black rounded-4xl mr-2 px-4 py-2 shadow hover:bg-(--primary) hover:text-white cursor-pointer" />
 
-      <form onSubmit={handleSubmit} className="w-xl bg-white p-6 rounded-4xl shadow-md">
+      <form
+        onSubmit={handleSubmit}
+        className="w-xl bg-white p-6 rounded-4xl shadow-md"
+      >
         <div className="flex justify-center">
           <h2 className="text-xl font-medium mb-4">Editează cartea</h2>
         </div>
@@ -117,14 +120,18 @@ export default function EditProduct() {
           <select
             className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.category}
-            onChange={(e) => setProduct({ ...product, category: e.target.value })}
+            onChange={(e) =>
+              setProduct({ ...product, category: e.target.value })
+            }
             required
           >
             <option disabled value=""></option>
-            {categories.map(category => {
+            {categories.map((category) => {
               return (
-                <option key={category.id} value={category.name}>{category.name}</option>
-              )
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              );
             })}
           </select>
         </label>
@@ -145,7 +152,9 @@ export default function EditProduct() {
           <input
             className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.publishingHouse}
-            onChange={(e) => setProduct({ ...product, publishingHouse: e.target.value })}
+            onChange={(e) =>
+              setProduct({ ...product, publishingHouse: e.target.value })
+            }
           />
         </label>
 
@@ -154,7 +163,9 @@ export default function EditProduct() {
           <input
             className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.pageNumber}
-            onChange={(e) => setProduct({ ...product, pageNumber: e.target.value })}
+            onChange={(e) =>
+              setProduct({ ...product, pageNumber: e.target.value })
+            }
           />
         </label>
 
@@ -163,7 +174,9 @@ export default function EditProduct() {
           <input
             className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.publishingYear}
-            onChange={(e) => setProduct({ ...product, publishingYear: e.target.value })}
+            onChange={(e) =>
+              setProduct({ ...product, publishingYear: e.target.value })
+            }
           />
         </label>
 
@@ -172,18 +185,23 @@ export default function EditProduct() {
           <textarea
             className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
             value={product.description}
-            onChange={(e) => setProduct({ ...product, description: e.target.value })}
+            onChange={(e) =>
+              setProduct({ ...product, description: e.target.value })
+            }
           />
         </label>
 
         <p className="text-gray-500 mb-3">* câmp obligatoriu</p>
 
         <div className="flex justify-center">
-          <button type="submit" className="bg-(--primary) text-white px-6 py-2 rounded-4xl hover:bg-(--primary-darker) transform cursor-pointer">
+          <button
+            type="submit"
+            className="bg-(--primary) text-white px-6 py-2 rounded-4xl hover:bg-(--primary-darker) transform cursor-pointer"
+          >
             Salvează modificările
           </button>
         </div>
       </form>
     </div>
-  )
+  );
 }
