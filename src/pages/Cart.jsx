@@ -1,10 +1,24 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useCart } from "../context/CartContext";
 import myImage from "../assets/temporaryImage.jpeg";
+import { getAuth } from "firebase/auth";
 
 export default function Cart() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const navigate = useNavigate();
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
+
+  const handleOrderClick = () => {
+    if (!user) {
+      navigate("/login", {
+        state: { errorMessage: "Trebuie să aveți cont pentru a comanda" },
+      });
+    } else {
+      navigate("/checkout");
+    }
+  };
 
   if (cart.length === 0) {
     return (
@@ -111,11 +125,12 @@ export default function Cart() {
           Preț total: {totalPrice} lei
         </h1>
       </div>
-      <Link to="/checkout">
-        <button className="flex justify-center bg-(--primary) rounded-4xl hover:bg-(--primary-darker) text-(--secondary) transition cursor-pointer m-auto py-2 px-16 text-xl">
-          Plasează comanda
-        </button>
-      </Link>
+      <button
+        onClick={handleOrderClick}
+        className="flex justify-center bg-(--primary) rounded-4xl hover:bg-(--primary-darker) text-(--secondary) transition cursor-pointer m-auto py-2 px-16 text-xl"
+      >
+        Plasează comanda
+      </button>
     </div>
   );
 }

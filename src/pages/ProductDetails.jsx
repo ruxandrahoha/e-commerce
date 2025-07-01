@@ -28,7 +28,7 @@ export default function ProductDetails() {
   if (loading)
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
 
@@ -42,39 +42,60 @@ export default function ProductDetails() {
     );
 
   return (
-    <div className="flex justify-center items-center md:flex-row gap-6">
-      <img
-        className="h-full object-contain rounded"
-        src={myImage}
-        alt={`Coperta ${product.title}`}
-      />
-      <div className="flex flex-col items-between">
-        <h1 className="text-2xl font-bold mb-2">{product.title}</h1>
+    <div className="max-w-5xl mx-auto px-4 py-10 flex flex-col md:flex-row gap-10 items-center">
+      {/* Imagine */}
+      <div className="w-full md:w-1/2">
+        <img
+          className="w-full h-auto max-h-[500px] object-contain rounded-2xl shadow"
+          src={myImage}
+          alt={`Coperta ${product.title}`}
+        />
+      </div>
 
-        <h2 className="text-lg mb-1">de {product.author}</h2>
+      {/* Detalii */}
+      <div className="w-full md:w-1/2 space-y-3">
+        <h1 className="text-3xl font-bold text-[var(--primary)]">
+          {product.title}
+        </h1>
 
-        <p className="text-md mb-1">ISBN: {product.isbn}</p>
+        <h2 className="text-lg text-gray-600">de {product.author}</h2>
 
-        {product.publishingHouse && (
-          <p className="text-md mb-1">Editura: {product.publishingHouse}</p>
-        )}
-
-        {product.publishingYear && (
-          <p className="text-md mb-1">An publicare: {product.publishingYear}</p>
-        )}
-
-        {product.pageNumber && (
-          <p className="text-md mb-1">Pagini: {product.pageNumber}</p>
-        )}
+        <div className="text-sm text-gray-700 space-y-1">
+          <p>
+            <strong>ISBN:</strong> {product.isbn}
+          </p>
+          {product.publishingHouse && (
+            <p>
+              <strong>Editura:</strong> {product.publishingHouse}
+            </p>
+          )}
+          {product.publishingYear && (
+            <p>
+              <strong>An publicare:</strong> {product.publishingYear}
+            </p>
+          )}
+          {product.pageNumber && (
+            <p>
+              <strong>Pagini:</strong> {product.pageNumber}
+            </p>
+          )}
+        </div>
 
         {product.description && (
-          <p className="text-md mt-4">Descriere: {product.description}</p>
+          <div className="mt-4">
+            <h3 className="text-md font-medium mb-1">Descriere</h3>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              {product.description}
+            </p>
+          </div>
         )}
 
-        <div className="flex justify-between items-center mt-6">
-          <span className="text-xl font-semibold">{product.price} lei</span>
+        <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <span className="text-2xl font-semibold text-[var(--primary)]">
+            {product.price} lei
+          </span>
           <button
-            className="bg-(--primary) text-(--secondary) rounded-4xl px-6 py-2 hover:bg-(--primary-darker)"
+            className="bg-[var(--primary)] text-[var(--secondary)] rounded-3xl px-6 py-3 font-medium hover:bg-[var(--primary-darker)] transition"
             onClick={() => addToCart(product)}
           >
             Adaugă în coș

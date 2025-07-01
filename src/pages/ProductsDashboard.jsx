@@ -14,7 +14,7 @@ import {
   deleteCategory,
 } from "../firebase";
 
-export default function Dashboard() {
+export default function ProductsDashboard() {
   const [products, setProducts] = useState([]);
   const { categories, loading: categoriesLoading } = useCategories();
   const [productsLoading, setProductsLoading] = useState(true);

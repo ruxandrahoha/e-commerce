@@ -13,6 +13,7 @@ import {
   orderBy,
   serverTimestamp,
   updateDoc,
+  runTransaction,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -209,4 +210,41 @@ export async function loginUser({ email, password }) {
     console.error("Login error:", error.message);
     return false;
   }
+}
+
+//Functii pentru orders
+export async function addOrder(orderData) {
+  const ordersRef = collection(db, "orders");
+  try {
+    await addDoc(ordersRef, {
+      ...orderData,
+      createdAt: serverTimestamp(),
+    });
+    console.log("Order saved successfully!");
+    return true;
+  } catch (error) {
+    console.error("Error saving order:", error);
+    return false;
+  }
+}
+
+export async function generateSequentialOrderId() {
+  const orderCounterRef = doc(db, "metadata", "orderCounter");
+
+  const newOrderId = await runTransaction(db, async (transaction) => {
+    const docSnapshot = await transaction.get(orderCounterRef);
+
+    if (!docSnapshot.exists()) {
+      transaction.set(orderCounterRef, { lastOrderId: 12345 });
+      return 12345;
+    }
+
+    const lastOrderId = docSnapshot.data().lastOrderId || 12344;
+    const nextOrderId = lastOrderId + 1;
+
+    transaction.update(orderCounterRef, { lastOrderId: nextOrderId });
+    return nextOrderId;
+  });
+
+  return newOrderId;
 }

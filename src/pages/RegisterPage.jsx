@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Navigate } from "react-router";
 import { registerUser } from "../firebase";
 import { FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 export default function RegisterPage() {
+  const { loggedUser } = useAuth();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -12,6 +14,10 @@ export default function RegisterPage() {
     confirmPassword: "",
   });
   const navigate = useNavigate();
+
+  if (loggedUser) {
+    return <Navigate to="/" />;
+  }
 
   const passwordOk =
     user.password === user.confirmPassword && user.password.length > 5;

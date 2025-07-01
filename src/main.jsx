@@ -10,7 +10,9 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Dashboard from "./pages/Dashboard";
+import Orders from "./pages/OrdersPage";
+import ProductsDashboard from "./pages/ProductsDashboard";
+import OrdersDashboard from "./pages/OrdersDashboard";
 import Wishlist from "./pages/Wishlist";
 import NotFound from "./pages/NotFound";
 import AddProduct from "./pages/AddProduct";
@@ -40,11 +42,14 @@ createRoot(document.getElementById("root")).render(
                 <Route path="cart" element={<Cart />} />
                 <Route path="checkout" element={<Checkout />} />
                 <Route path="wishlist" element={<Wishlist />} />
+                <Route path="orders" element={<Orders />} />
 
                 <Route path="dashboard" element={<PrivateRoute />}>
-                  <Route index element={<Dashboard />} />
-                  <Route path="add" element={<AddProduct />} />
-                  <Route path="edit/:id" element={<EditProduct />} />
+                  <Route path="products" element={<ProductsDashboard />} />
+                  <Route path="products/add" element={<AddProduct />} />
+                  <Route path="products/edit/:id" element={<EditProduct />} />
+
+                  <Route path="orders" element={<OrdersDashboard />} />
                 </Route>
 
                 <Route path="*" element={<NotFound />} />

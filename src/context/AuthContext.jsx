@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         const tokenResult = await getIdTokenResult(currentUser);
+        console.log("Custom claims:", tokenResult.claims);
         setLoggedUser({
           ...currentUser,
           isAdmin: tokenResult.claims.admin || false,

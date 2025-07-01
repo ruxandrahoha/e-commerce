@@ -1,18 +1,26 @@
-import { useState } from "react";
-import { useNavigate, Navigate } from "react-router";
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, Navigate, useLocation } from "react-router";
 import { loginUser } from "../firebase";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
 
 export default function LoginPage() {
   const { loggedUser } = useAuth();
+  const location = useLocation();
+  const message = location.state?.errorMessage || null;
 
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (message) {
+      // opțional: curățare după un timp
+      window.history.replaceState({}, document.title);
+    }
+  }, []);
 
   if (loggedUser) {
     return <Navigate to="/" />;
@@ -36,6 +44,9 @@ export default function LoginPage() {
   return (
     <div className="flex justify-center h-full">
       <div className="w-1/3 my-auto border-2 border-(--secondary) p-4 rounded-4xl bg-white px-20 shadow-md">
+        {message && (
+          <div className="text-red-500 text-center mb-4">{message}</div>
+        )}
         <form className="flex flex-col space-y-6 mt-6" onSubmit={handleLogin}>
           <label htmlFor="email" className=" text-sm font-medium text-gray-700">
             Email
