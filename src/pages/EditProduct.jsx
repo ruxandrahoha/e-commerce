@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db, editProduct } from "../firebase";
 import GoBackBtn from "../components/GoBackBtn";
 import { useCategories } from "../context/CategoriesContext";
+import Spinner from "../components/Spinner";
 
 export default function EditProduct() {
   const { id } = useParams();
@@ -66,11 +67,7 @@ export default function EditProduct() {
   };
 
   if (categoriesLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (

@@ -3,12 +3,21 @@ import { useParams } from "react-router";
 import { getProductById } from "../firebase";
 import myImage from "../assets/temporaryImage.jpeg";
 import { useCart } from "../context/CartContext";
+import Spinner from "../components/Spinner";
+import { useWishlist } from "../context/WishlistContext";
+import { GoHeart, GoHeartFill } from "react-icons/go";
+import { IoMdAdd, IoMdCheckmark } from "react-icons/io";
+import clickSound from "../assets/add-to-cart.mp3";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+
+  const audio = new Audio(clickSound);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -25,12 +34,14 @@ export default function ProductDetails() {
     fetchProduct();
   }, [id]);
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
+  function handleAddToCart() {
+    addToCart(product);
+    setIsAddedToCart(true);
+    audio.play();
+    setTimeout(() => setIsAddedToCart(false), 1000);
+  }
+
+  if (loading) return <Spinner />;
 
   if (!product)
     return (
@@ -90,16 +101,39 @@ export default function ProductDetails() {
           </div>
         )}
 
-        <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div className="mt-6 space-y-4">
           <span className="text-2xl font-semibold text-[var(--primary)]">
             {product.price} lei
           </span>
-          <button
-            className="bg-[var(--primary)] text-[var(--secondary)] rounded-3xl px-6 py-3 font-medium hover:bg-[var(--primary-darker)] transition"
-            onClick={() => addToCart(product)}
-          >
-            Adaugă în coș
-          </button>
+
+          <div className="flex gap-3">
+            <button
+              className="bg-[var(--primary)] text-[var(--secondary)] rounded-3xl px-6 py-3 font-medium hover:bg-[var(--primary-darker)] transition flex items-center gap-2"
+              onClick={handleAddToCart}
+            >
+              <span>Adaugă în coș</span>
+              {isAddedToCart ? (
+                <>
+                  <IoMdCheckmark className="text-xl" />
+                </>
+              ) : (
+                <>
+                  <IoMdAdd className="text-xl" />
+                </>
+              )}
+            </button>
+
+            <button
+              className="text-md bg-[var(--primary)] text-[var(--secondary)] rounded-4xl p-3 hover:bg-[var(--primary-darker)] transition"
+              onClick={() => toggleWishlist(product)}
+            >
+              {isInWishlist(product.id) ? (
+                <GoHeartFill className="text-xl" />
+              ) : (
+                <GoHeart className="text-xl text-[var(--secondary)]" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>

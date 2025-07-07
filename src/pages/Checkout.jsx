@@ -49,7 +49,7 @@ export default function Checkout() {
     const orderId = await generateSequentialOrderId();
 
     const order = {
-      id: orderId,
+      orderId: orderId,
       clientDetails: details,
       cart,
       total: (totalPrice + 9.99).toFixed(2),

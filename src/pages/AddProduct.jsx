@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { addProduct } from "../firebase";
 import GoBackBtn from "../components/GoBackBtn";
 import { useCategories } from "../context/CategoriesContext";
+import Spinner from "../components/Spinner";
 
 export default function AddProduct() {
   const { categories, loading: categoriesLoading } = useCategories();
@@ -34,11 +35,7 @@ export default function AddProduct() {
   };
 
   if (categoriesLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (

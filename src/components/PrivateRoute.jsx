@@ -1,10 +1,15 @@
 import { useAuth } from "../context/AuthContext";
 import { Navigate, Outlet } from "react-router";
+import Spinner from "./Spinner";
 
 export default function PrivateRoute() {
-  const { loggedUser } = useAuth();
+  const { loggedUser, loading } = useAuth();
 
-  if (!loggedUser.isAdmin) {
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (!loggedUser || !loggedUser.isAdmin) {
     return <Navigate to="/login" />;
   }
 

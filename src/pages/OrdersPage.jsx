@@ -17,7 +17,7 @@ export default function Orders() {
       const q = query(
         collection(db, "orders"),
         where("userUID", "==", currentUser.uid),
-        orderBy("id", "desc")
+        orderBy("createdAt", "desc")
       );
 
       const querySnapshot = await getDocs(q);
@@ -54,14 +54,37 @@ export default function Orders() {
             <div key={order.id} className="bg-white p-6 rounded-xl shadow">
               <div className="flex justify-between items-center mb-2">
                 <h2 className="text-xl font-bold text-[var(--primary)]">
-                  Comandă #{order.id}
+                  Comanda #{order.orderId}
                 </h2>
-                <span className="text-sm text-gray-500">{order.status}</span>
+                <p className="text-gray-600">
+                  Status:
+                  <span
+                    className={`pl-1 rounded-xl bg-white font-semibold ${
+                      order.status === "Confirmata"
+                        ? "text-green-500"
+                        : order.status === "Anulata"
+                        ? "text-red-500"
+                        : "text-gray-300"
+                    }`}
+                  >
+                    {order.status}
+                  </span>
+                </p>
               </div>
+
               <p className="text-sm text-gray-600 mb-2">
-                Nume client: {order.clientDetails.nume}{" "}
-                {order.clientDetails.prenume}
+                Data:{" "}
+                {new Intl.DateTimeFormat("ro-RO", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                }).format(order.createdAt.toDate())}
               </p>
+
+              <p className="text-sm text-gray-600 mb-2">Produse:</p>
               <ul className="list-disc pl-6 mb-2 text-sm">
                 {order.cart.map((item, i) => (
                   <li key={i}>

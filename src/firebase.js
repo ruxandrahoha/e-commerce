@@ -218,6 +218,7 @@ export async function addOrder(orderData) {
   try {
     await addDoc(ordersRef, {
       ...orderData,
+      status: "În procesare",
       createdAt: serverTimestamp(),
     });
     console.log("Order saved successfully!");
@@ -247,4 +248,35 @@ export async function generateSequentialOrderId() {
   });
 
   return newOrderId;
+}
+
+export function listenToAllOrders(setOrders) {
+  const ordersRef = collection(db, "orders");
+  const ordersQuery = query(ordersRef, orderBy("createdAt", "desc"));
+
+  return onSnapshot(
+    ordersQuery,
+    (snapshot) => {
+      const orders = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOrders(orders);
+    },
+    (error) => {
+      console.error("Error listening to orders:", error);
+    }
+  );
+}
+
+export async function updateOrderStatus(orderId, newStatus) {
+  try {
+    const orderRef = doc(db, "orders", orderId);
+    await updateDoc(orderRef, {
+      status: newStatus,
+    });
+    console.log(`Status actualizat la: ${newStatus}`);
+  } catch (error) {
+    console.error("Eroare la actualizarea statusului comenzii:", error);
+  }
 }

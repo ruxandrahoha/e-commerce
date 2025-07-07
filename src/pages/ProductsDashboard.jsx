@@ -5,6 +5,7 @@ import { TbPencil } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { useCategories } from "../context/CategoriesContext";
+import Spinner from "../components/Spinner";
 
 import {
   listenToProducts,
@@ -93,11 +94,7 @@ export default function ProductsDashboard() {
   });
 
   if (productsLoading || categoriesLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (

@@ -5,6 +5,11 @@ import myImage from "../assets/temporaryImage.jpeg";
 import { listenToProducts } from "../firebase";
 import { useCategories } from "../context/CategoriesContext";
 import GoBackBtn from "../components/GoBackBtn";
+import Spinner from "../components/Spinner";
+import { IoMdAdd, IoMdCheckmark } from "react-icons/io";
+import { GoHeart, GoHeartFill } from "react-icons/go";
+import { useWishlist } from "../context/WishlistContext";
+import clickSound from "../assets/add-to-cart.mp3";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
@@ -12,6 +17,9 @@ export default function ProductList() {
   const [productsLoading, setProductsLoading] = useState(true);
   const { categories, loading: categoriesLoading } = useCategories();
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+  const [addedProductIds, setAddedProductIds] = useState([]);
+  const audio = new Audio(clickSound);
 
   const filter = searchParams.get("filter") || "all";
 
@@ -54,38 +62,66 @@ export default function ProductList() {
     );
   });
 
-  const cardElements = filteredProducts.map((product) => (
-    <div
-      key={product.id}
-      className="bg-white m-2 p-6 rounded-4xl shadow-md hover:shadow-lg/25"
-    >
-      <Link to={`/products/${product.id}`}>
-        <img
-          className="w-52 h-[200px] object-cover"
-          src={myImage}
-          alt={`Cover of ${product.title}`}
-        />
-        <h1 className="font-bold line-clamp-1">{product.title}</h1>
-      </Link>
-      <h2>de {product.author}</h2>
-      <div className="flex justify-between pt-4">
-        <p className="text-lg mt-2">{product.price} lei</p>
-        <button
-          className="text-md bg-(--primary) text-(--secondary) rounded-4xl p-2 px-4 cursor-pointer hover:bg-(--primary-darker) transition"
-          onClick={() => addToCart(product)}
-        >
-          Add to cart
-        </button>
-      </div>
-    </div>
-  ));
+  function handleAddToCart(product) {
+    addToCart(product);
+    audio.play();
 
-  if (productsLoading || categoriesLoading) {
+    setAddedProductIds((prev) => [...prev, product.id]);
+
+    setTimeout(() => {
+      setAddedProductIds((prev) => prev.filter((id) => id !== product.id));
+    }, 1000);
+  }
+
+  const cardElements = filteredProducts.map((product) => {
+    const inWishlist = isInWishlist(product.id);
+
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-8 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
+      <div
+        key={product.id}
+        className="bg-white m-2 p-6 rounded-4xl shadow-md hover:shadow-lg/25"
+      >
+        <Link to={`/products/${product.id}`}>
+          <img
+            className="w-52 h-[200px] object-cover"
+            src={myImage}
+            alt={`Cover of ${product.title}`}
+          />
+          <h1 className="font-bold line-clamp-1">{product.title}</h1>
+        </Link>
+        <h2>de {product.author}</h2>
+        <div className="flex justify-between pt-4">
+          <p className="text-lg mt-2">{product.price} lei</p>
+          <div>
+            <button
+              className="text-md bg-(--primary) text-(--secondary) rounded-4xl p-2 mx-2 cursor-pointer hover:bg-(--primary-darker) transition"
+              onClick={() => toggleWishlist(product)}
+            >
+              {inWishlist ? (
+                <GoHeartFill className="text-xl" />
+              ) : (
+                <GoHeart className="text-xl text-(--secondary)" />
+              )}
+            </button>
+
+            <button
+              className="text-md bg-(--primary) text-(--secondary) rounded-4xl p-2 cursor-pointer hover:bg-(--primary-darker) transition"
+              onClick={() => handleAddToCart(product)}
+            >
+              {addedProductIds.includes(product.id) ? (
+                <IoMdCheckmark className="text-xl text-(--secondary)" />
+              ) : (
+                <IoMdAdd className="text-xl text-(--secondary)" />
+              )}
+            </button>
+          </div>
+        </div>
       </div>
     );
+  });
+
+  if (productsLoading || categoriesLoading) {
+    return <Spinner />;
   }
 
   if (!isValidFilter) {

@@ -93,4 +93,12 @@ export default function UserMenu() {
       </Popover>
     );
   }
+  return (
+    <Link
+      className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:underline"
+      to="/login"
+    >
+      Autentificare
+    </Link>
+  );
 }
