@@ -10,7 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Orders from "./pages/OrdersPage";
+import OrdersPage from "./pages/OrdersPage";
 import ProductsDashboard from "./pages/ProductsDashboard";
 import OrdersDashboard from "./pages/OrdersDashboard";
 import Wishlist from "./pages/Wishlist";
@@ -22,7 +22,8 @@ import { WishlistProvider } from "./context/WishlistContext";
 import { AuthProvider } from "./context/AuthContext";
 import { CategoriesProvider } from "./context/CategoriesContext";
 import { ToastContainer } from "react-toastify";
-import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
+import UserRoute from "./components/UserRoute";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -42,17 +43,19 @@ createRoot(document.getElementById("root")).render(
                   <Route path="login" element={<LoginPage />} />
                   <Route path="register" element={<RegisterPage />} />
                   <Route path="cart" element={<Cart />} />
-                  <Route path="checkout" element={<Checkout />} />
-                  <Route path="wishlist" element={<Wishlist />} />
-                  <Route path="orders" element={<Orders />} />
 
-                  <Route path="dashboard" element={<PrivateRoute />}>
+                  <Route path="dashboard" element={<AdminRoute />}>
                     <Route index element={<Navigate to="orders" replace />} />
+                    <Route path="orders" element={<OrdersDashboard />} />
                     <Route path="products" element={<ProductsDashboard />} />
                     <Route path="products/add" element={<AddProduct />} />
                     <Route path="products/edit/:id" element={<EditProduct />} />
+                  </Route>
 
-                    <Route path="orders" element={<OrdersDashboard />} />
+                  <Route element={<UserRoute />}>
+                    <Route path="checkout" element={<Checkout />} />
+                    <Route path="wishlist" element={<Wishlist />} />
+                    <Route path="orders" element={<OrdersPage />} />
                   </Route>
 
                   <Route path="*" element={<NotFound />} />

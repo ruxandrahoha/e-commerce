@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { auth, db } from "../firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const CartContext = createContext(null);
 
@@ -10,9 +12,51 @@ export function CartProvider({ children }) {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  const [user, setUser] = useState(null);
+
+  const updateCartInFirestore = async (newCart) => {
+    if (!user) return;
+    const cartRef = doc(db, "carts", user.uid);
+    await setDoc(cartRef, { items: newCart });
+  };
+
+  const mergeCarts = (firebaseCart, localCart) => {
+    const merged = [...firebaseCart];
+    for (const item of localCart) {
+      const existing = merged.find((p) => p.id === item.id);
+      if (existing) {
+        existing.quantity = item.quantity;
+      } else {
+        merged.push(item);
+      }
+    }
+    return merged;
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      setUser(firebaseUser);
+      if (firebaseUser) {
+        const cartRef = doc(db, "carts", firebaseUser.uid);
+        const docSnap = await getDoc(cartRef);
+        const firebaseCart = docSnap.exists() ? docSnap.data().items || [] : [];
+
+        const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+        const mergedCart = mergeCarts(firebaseCart, localCart);
+
+        setCart(mergedCart);
+        await updateCartInFirestore(mergedCart);
+        localStorage.removeItem("cart");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    if (user) updateCartInFirestore(cart);
+  }, [cart, user]);
 
   function addToCart(product) {
     setCart((prevCart) => {
@@ -57,8 +101,8 @@ export function CartProvider({ children }) {
       value={{
         cart,
         addToCart,
-        removeFromCart,
         updateQuantity,
+        removeFromCart,
         clearCart,
         totalPrice,
       }}

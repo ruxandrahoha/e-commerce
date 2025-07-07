@@ -27,20 +27,24 @@ export default function Wishlist() {
 
   if (wishlist.length === 0) {
     return (
-      <div className="flex flex-col items-center p-8 w-full text-2xl font-serif mt-20">
-        Lista ta de favorite este goală.
-        <GoBackBtn className="bg-(--primary) text-(--secondary) text-lg mt-4 hover:bg-(--primary-darker) cursor-pointer transition p-2 rounded-4xl" />
+      <div className="max-w-md mx-auto text-center">
+        <p className="p-8 w-full text-3xl font-serif mt-20">
+          Lista de favorite este goală.
+        </p>
+        <Link to="/products">
+          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl hover:bg-(--primary-darker) cursor-pointer">
+            Începe cumpărăturile
+          </button>
+        </Link>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col items-center mx-20">
-      <h1 className="text-3xl font-bold my-6">Produsele tale favorite</h1>
+      <h1 className="text-2xl my-6 font-serif">Produsele tale favorite</h1>
       <div className="flex flex-wrap justify-center items-center">
         {wishlist.map((product) => {
-          const inWishlist = isInWishlist(product.id);
-
           return (
             <div
               key={product.id}

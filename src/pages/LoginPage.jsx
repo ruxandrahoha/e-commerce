@@ -17,7 +17,6 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (message) {
-      // opțional: curățare după un timp
       window.history.replaceState({}, document.title);
     }
   }, []);

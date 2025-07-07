@@ -6,8 +6,12 @@ import { IoChevronDown } from "react-icons/io5";
 import LogoutButton from "./LogoutButton";
 
 export default function UserMenu() {
-  const { loggedUser } = useAuth();
+  const { loggedUser, loading } = useAuth();
   const [dashboardOpen, setDashboardOpen] = useState(false);
+
+  if (loading) {
+    return <div className="w-32"></div>;
+  }
 
   if (loggedUser) {
     return (

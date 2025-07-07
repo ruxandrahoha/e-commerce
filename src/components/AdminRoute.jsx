@@ -2,7 +2,7 @@ import { useAuth } from "../context/AuthContext";
 import { Navigate, Outlet } from "react-router";
 import Spinner from "./Spinner";
 
-export default function PrivateRoute() {
+export default function AdminRoute() {
   const { loggedUser, loading } = useAuth();
 
   if (loading) {

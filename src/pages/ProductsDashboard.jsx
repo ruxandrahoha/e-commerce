@@ -20,7 +20,6 @@ export default function ProductsDashboard() {
   const { categories, loading: categoriesLoading } = useCategories();
   const [productsLoading, setProductsLoading] = useState(true);
   const [filter, setFilter] = useState("all");
-  //const { loggedUser, loading } = useAuth()
 
   useEffect(() => {
     const unsubscribeProducts = listenToProducts((data) => {

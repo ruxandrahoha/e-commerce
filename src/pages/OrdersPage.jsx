@@ -3,8 +3,9 @@ import { auth, db } from "../firebase";
 import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
 import { Navigate } from "react-router";
 import GoBackBtn from "../components/GoBackBtn";
+import Spinner from "../components/Spinner";
 
-export default function Orders() {
+export default function OrdersPage() {
   const [user, setUser] = useState(null);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,6 +37,8 @@ export default function Orders() {
     return <Navigate to="/login" />;
   }
 
+  if (loading) return <Spinner />;
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       <GoBackBtn className="bg-white rounded-4xl p-3 cursor-pointer mb-6 shadow" />
@@ -44,9 +47,7 @@ export default function Orders() {
         Comenzile mele
       </h1>
 
-      {loading ? (
-        <p>Se încarcă comenzile...</p>
-      ) : orders.length === 0 ? (
+      {orders.length === 0 ? (
         <p>Nu ai nicio comandă înregistrată.</p>
       ) : (
         <div className="space-y-6">

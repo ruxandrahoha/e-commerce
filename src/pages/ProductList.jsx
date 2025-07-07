@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router";
+import { Link, useSearchParams, useNavigate } from "react-router";
 import { useCart } from "../context/CartContext";
 import myImage from "../assets/temporaryImage.jpeg";
 import { listenToProducts } from "../firebase";
@@ -20,6 +20,7 @@ export default function ProductList() {
   const { toggleWishlist, isInWishlist } = useWishlist();
   const [addedProductIds, setAddedProductIds] = useState([]);
   const audio = new Audio(clickSound);
+  const navigate = useNavigate();
 
   const filter = searchParams.get("filter") || "all";
 
@@ -73,6 +74,18 @@ export default function ProductList() {
     }, 1000);
   }
 
+  const handleWishlistClick = async (product) => {
+    const success = await toggleWishlist(product);
+    if (!success) {
+      navigate("/login", {
+        state: {
+          errorMessage:
+            "Trebuie să fii autentificat pentru a salva produse în wishlist.",
+        },
+      });
+    }
+  };
+
   const cardElements = filteredProducts.map((product) => {
     const inWishlist = isInWishlist(product.id);
 
@@ -95,7 +108,7 @@ export default function ProductList() {
           <div>
             <button
               className="text-md bg-(--primary) text-(--secondary) rounded-4xl p-2 mx-2 cursor-pointer hover:bg-(--primary-darker) transition"
-              onClick={() => toggleWishlist(product)}
+              onClick={() => handleWishlistClick(product)}
             >
               {inWishlist ? (
                 <GoHeartFill className="text-xl" />
