@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getProductById } from "../firebase";
-import myImage from "../assets/temporaryImage.jpeg";
 import { useCart } from "../context/CartContext";
 import Spinner from "../components/Spinner";
 import { useWishlist } from "../context/WishlistContext";
@@ -58,7 +57,7 @@ export default function ProductDetails() {
       <div className="w-full md:w-1/2">
         <img
           className="w-full h-auto max-h-[500px] object-contain rounded-2xl shadow"
-          src={myImage}
+          src={product.image}
           alt={`Coperta ${product.title}`}
         />
       </div>

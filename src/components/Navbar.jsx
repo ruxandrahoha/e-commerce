@@ -12,7 +12,7 @@ export default function Navbar() {
         className="text-(--secondary) text-xl font-semibold ml-20 hover:text-[#eaccc1]"
         to="/"
       >
-        Nume Librărie
+        Logo Librărie
       </Link>
       <nav className="py-6 mr-20">
         <NavLink

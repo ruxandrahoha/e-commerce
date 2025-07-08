@@ -21,6 +21,7 @@ import {
   updateProfile,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAA512BoGc903K9JatyxQNGhjw8scKqOXU",
@@ -37,6 +38,7 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 const colRef = collection(db, "products");
 const categoriesRef = collection(db, "categories");
+const storage = getStorage();
 
 export function listenToProducts(setProducts) {
   const productsQuery = query(colRef, orderBy("createdAt", "desc"));
@@ -57,7 +59,9 @@ export function listenToProducts(setProducts) {
 }
 
 export async function addProduct(product) {
-  addDoc(colRef, {
+  const imageUrl = await uploadImage(product.image);
+
+  await addDoc(colRef, {
     title: product.title,
     author: product.author,
     isbn: product.isbn,
@@ -67,7 +71,7 @@ export async function addProduct(product) {
     category: product.category,
     description: product.description || null,
     pageNumber: product.pageNumber,
-    /*image: product.image,*/
+    image: imageUrl,
     createdAt: serverTimestamp(),
   });
 }
@@ -88,11 +92,19 @@ export async function deleteProduct(product) {
 
 export async function editProduct(product) {
   const docRef = doc(db, "products", product.id);
+
   try {
     await updateDoc(docRef, {
       title: product.title,
       author: product.author,
+      isbn: product.isbn,
+      category: product.category,
+      publishingHouse: product.publishingHouse,
+      publishingYear: product.publishingYear,
       price: product.price,
+      description: product.description,
+      pageNumber: product.pageNumber,
+      image: product.image, // imaginea actualizată (URL)
       updatedAt: serverTimestamp(),
     });
   } catch (error) {
@@ -279,4 +291,12 @@ export async function updateOrderStatus(orderId, newStatus) {
   } catch (error) {
     console.error("Eroare la actualizarea statusului comenzii:", error);
   }
+}
+
+//storage
+export async function uploadImage(file) {
+  const imageRef = ref(storage, `products/${Date.now()}-${file.name}`);
+  const snapshot = await uploadBytes(imageRef, file);
+  const downloadURL = await getDownloadURL(snapshot.ref);
+  return downloadURL;
 }

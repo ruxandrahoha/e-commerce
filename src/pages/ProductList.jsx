@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router";
 import { useCart } from "../context/CartContext";
-import myImage from "../assets/temporaryImage.jpeg";
 import { listenToProducts } from "../firebase";
 import { useCategories } from "../context/CategoriesContext";
 import GoBackBtn from "../components/GoBackBtn";
@@ -92,12 +91,12 @@ export default function ProductList() {
     return (
       <div
         key={product.id}
-        className="bg-white m-2 p-6 rounded-4xl shadow-md hover:shadow-lg/25"
+        className="w-64 bg-white m-2 p-4 rounded-4xl shadow-md hover:shadow-lg/25"
       >
         <Link to={`/products/${product.id}`}>
           <img
-            className="w-52 h-[200px] object-cover"
-            src={myImage}
+            className="w-64 mb-2 h-[250px] object-contain"
+            src={product.image}
             alt={`Cover of ${product.title}`}
           />
           <h1 className="font-bold line-clamp-1">{product.title}</h1>

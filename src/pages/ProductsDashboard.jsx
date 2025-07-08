@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router";
-import myImage from "../assets/temporaryImage.jpeg";
 import { TbPencil } from "react-icons/tb";
 import { MdOutlineDelete } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
@@ -66,11 +65,11 @@ export default function ProductsDashboard() {
         className="w-64 bg-white m-2 p-4 rounded-4xl shadow-md hover:shadow-lg/25"
       >
         <img
-          className="w-64 h-[250px] object-cover"
-          src={myImage}
+          className="w-64 mb-2 h-[250px] object-contain"
+          src={product.image}
           alt={`Cover of ${product.title}`}
         ></img>
-        <h1 className="font-bold">{product.title}</h1>
+        <h1 className="font-bold line-clamp-1">{product.title}</h1>
         <h2 className="">de {product.author}</h2>
         <div className="flex justify-between pt-4">
           <p className="text-lg mt-2">{product.price} lei</p>
@@ -98,7 +97,7 @@ export default function ProductsDashboard() {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mx-20">
         <div className="flex gap-4 mb-4">
           <button
             onClick={() => setFilter("all")}
@@ -118,8 +117,8 @@ export default function ProductsDashboard() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center">
-        <div className="flex flex-wrap justify-center items-center w-5/6 m-auto">
+      <div className="flex flex-wrap justify-center items-center w-5/6 m-auto">
+        <div className="flex flex-wrap justify-center items-center">
           <div className="w-64 h-96 flex justify-center items-center bg-white m-2 p-4 rounded-4xl shadow-md hover:shadow-lg/25">
             <Link to="/dashboard/add">
               <button className="text-md h-12 my-auto bg-(--primary) rounded-4xl p-2 px-4 cursor-pointer text-(--secondary) hover:bg-(--primary-darker) transition">

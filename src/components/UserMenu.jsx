@@ -23,7 +23,7 @@ export default function UserMenu() {
 
         <PopoverPanel
           as="div"
-          className="absolute right-0 mt-1 w-36 bg-white shadow-lg rounded-xl p-2 z-50 border-2 border-(--primary) font-semibold"
+          className="absolute right-0 mt-1 w-42 bg-white shadow-lg rounded-xl p-2 z-50 border-2 border-(--primary) font-semibold"
         >
           {({ close }) => (
             <>
@@ -76,7 +76,7 @@ export default function UserMenu() {
                   setDashboardOpen(false);
                   close();
                 }}
-                className="block w-full text-center px-4 py-2 bg-(--secondary) text-(--primary) hover:bg-(--primary) hover:text-(--secondary) rounded-md transition mb-2"
+                className="block w-full text-center p-2 bg-(--secondary) text-(--primary) hover:bg-(--primary) hover:text-(--secondary) rounded-md transition mb-2"
               >
                 Comenzile mele
               </Link>

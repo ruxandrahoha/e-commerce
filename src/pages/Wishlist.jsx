@@ -2,14 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { useWishlist } from "../context/WishlistContext";
 import { useCart } from "../context/CartContext";
-import myImage from "../assets/temporaryImage.jpeg";
 import { IoMdAdd, IoMdCheckmark } from "react-icons/io";
 import { RiDeleteBinLine } from "react-icons/ri";
-import GoBackBtn from "../components/GoBackBtn";
 import clickSound from "../assets/add-to-cart.mp3";
 
 export default function Wishlist() {
-  const { wishlist, toggleWishlist, isInWishlist } = useWishlist();
+  const { wishlist, toggleWishlist } = useWishlist();
   const { addToCart } = useCart();
   const [addedProductIds, setAddedProductIds] = useState([]);
   const audio = new Audio(clickSound);
@@ -45,6 +43,7 @@ export default function Wishlist() {
       <h1 className="text-2xl my-6 font-serif">Produsele tale favorite</h1>
       <div className="flex flex-wrap justify-center items-center">
         {wishlist.map((product) => {
+          console.log("Wishlist product image URL:", product.image);
           return (
             <div
               key={product.id}
@@ -52,8 +51,8 @@ export default function Wishlist() {
             >
               <Link to={`/products/${product.id}`}>
                 <img
-                  className="w-52 h-[200px] object-cover"
-                  src={myImage}
+                  className="w-52 h-[200px] object-contain mb-2"
+                  src={product.image}
                   alt={`Cover of ${product.title}`}
                 />
                 <h1 className="font-bold line-clamp-1">{product.title}</h1>

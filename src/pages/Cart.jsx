@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
 import { useCart } from "../context/CartContext";
-import myImage from "../assets/temporaryImage.jpeg";
 import { getAuth } from "firebase/auth";
 
 export default function Cart() {
@@ -57,9 +56,9 @@ export default function Cart() {
             className="flex items-center border-2 border-(--secondary) p-4 rounded-4xl bg-white gap-4"
           >
             <img
-              src={myImage}
+              src={item.image}
               alt={`Coperta cartii ${item.title}`}
-              className="w-24 h-24 object-cover rounded-4xl"
+              className="w-24 h-24 object-contain"
             />
 
             <div className="flex-1 min-w-[150px]">

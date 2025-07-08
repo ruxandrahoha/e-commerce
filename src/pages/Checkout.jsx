@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router";
 import { useCart } from "../context/CartContext";
 import GoBackBtn from "../components/GoBackBtn";
-import { auth, addOrder, generateSequentialOrderId } from "../firebase";
+import { auth, addOrder, generateSequentialOrderId, db } from "../firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { localitati } from "../localitati";
 import OrderConfirmationModal from "../components/OrderConfirmationModal";
 
@@ -10,7 +11,6 @@ export default function Checkout() {
   const [user, setUser] = useState(null);
   const { cart, totalPrice, clearCart } = useCart();
   const [details, setDetails] = useState({
-    tipClient: "",
     nume: "",
     prenume: "",
     judet: "",
@@ -25,14 +25,48 @@ export default function Checkout() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [lastOrderId, setLastOrderId] = useState(null);
+  const [voucherError, setVoucherError] = useState("");
+  const [discountPercent, setDiscountPercent] = useState(0);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
+      if (currentUser && currentUser.email) {
+        setDetails((prev) => ({ ...prev, email: currentUser.email }));
+      }
     });
 
     return () => unsubscribe();
   }, []);
+
+  async function checkVoucher(voucherCode) {
+    if (!voucherCode) {
+      setVoucherError("");
+      setDiscountPercent(0);
+      return;
+    }
+
+    const vouchersRef = collection(db, "vouchers");
+    const q = query(
+      vouchersRef,
+      where("name", "==", voucherCode.toLowerCase())
+    );
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      const data = doc.data();
+      setDiscountPercent(data.percent || 0);
+      setVoucherError("");
+    } else {
+      setDiscountPercent(0);
+      setVoucherError("Cod voucher invalid");
+    }
+  }
+
+  const deliveryFee = 9.99;
+  const discountAmount = (totalPrice * discountPercent) / 100;
+  const finalPrice = (totalPrice - discountAmount + deliveryFee).toFixed(2);
 
   function handleJudetChange(e) {
     const newJudet = e.target.value;
@@ -52,7 +86,7 @@ export default function Checkout() {
       orderId: orderId,
       clientDetails: details,
       cart,
-      total: (totalPrice + 9.99).toFixed(2),
+      total: finalPrice,
       userUID: user.uid,
       status: "În procesare",
     };
@@ -62,7 +96,6 @@ export default function Checkout() {
     setIsSubmitting(false);
     if (success) {
       setDetails({
-        tipClient: "",
         nume: "",
         prenume: "",
         judet: "",
@@ -88,7 +121,7 @@ export default function Checkout() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <GoBackBtn className="bg-white rounded-4xl p-3 cursor-pointer mb-6 shadow" />
+      <GoBackBtn className="bg-white rounded-2xl p-3 cursor-pointer mb-6 shadow" />
 
       <form className="flex flex-col lg:flex-row gap-8" onSubmit={handleSubmit}>
         <div className="bg-white p-6 rounded-2xl shadow-lg w-full lg:w-2/3">
@@ -97,20 +130,13 @@ export default function Checkout() {
           </h1>
 
           <div className="space-y-4">
-            <label className="block">
-              <span className="font-medium">Tip client*</span>
-              <select
-                className="border border-gray-300 p-2 w-full rounded mt-1"
-                value={details.tipClient}
-                onChange={(e) =>
-                  setDetails({ ...details, tipClient: e.target.value })
-                }
-                required
-              >
-                <option value="">Selectează</option>
-                <option value="pf">Persoană fizică</option>
-                <option value="pj">Persoană juridică</option>
-              </select>
+            <label key="email" className="block">
+              <span className="font-medium">Email</span>
+              <input
+                className="border border-gray-300 p-2 w-full rounded mt-1 bg-gray-200 cursor-not-allowed"
+                value={details.email}
+                disabled
+              />
             </label>
 
             <label key="nume" className="block">
@@ -142,20 +168,10 @@ export default function Checkout() {
               <input
                 className="border border-gray-300 p-2 w-full rounded mt-1"
                 value={details["telefon"]}
+                type="tel"
+                pattern="0[0-9]{9}"
                 onChange={(e) =>
                   setDetails({ ...details, telefon: e.target.value })
-                }
-                required
-              />
-            </label>
-
-            <label key="email" className="block">
-              <span className="font-medium">Email</span>
-              <input
-                className="border border-gray-300 p-2 w-full rounded mt-1"
-                value={details["email"]}
-                onChange={(e) =>
-                  setDetails({ ...details, email: e.target.value })
                 }
                 required
               />
@@ -231,35 +247,60 @@ export default function Checkout() {
             <p>
               Subtotal: <span className="float-right">{totalPrice} lei</span>
             </p>
+            {!voucherError ? (
+              <p>
+                Reducere:
+                <span className="float-right">
+                  {-((totalPrice * 15) / 100).toFixed(2)} lei
+                </span>
+              </p>
+            ) : null}
             <p>
               Taxă livrare: <span className="float-right">9.99 lei</span>
             </p>
             <hr className="my-2" />
             <p className="font-bold">
-              Total:{" "}
-              <span className="float-right">
-                {(totalPrice + 9.99).toFixed(2)} lei
-              </span>
+              Total: <span className="float-right">{finalPrice} lei</span>
             </p>
           </div>
 
           <label className="block mt-6">
             <span className="font-medium">Cod reducere</span>
-            <input
-              className="border border-gray-300 p-2 w-full rounded mt-1"
-              value={details.voucher}
-              onChange={(e) =>
-                setDetails({ ...details, voucher: e.target.value })
-              }
-            />
-            <span className="text-sm text-gray-500 mt-1 inline-block">
-              Cod valid/invalid
-            </span>
+            <div className="flex gap-2 mt-1">
+              <input
+                className="border border-gray-300 p-2 rounded flex-grow"
+                value={details.voucher}
+                onChange={(e) =>
+                  setDetails({ ...details, voucher: e.target.value.trim() })
+                }
+                placeholder="Introdu codul voucher"
+              />
+              <button
+                type="button"
+                className="bg-[var(--primary)] text-[var(--secondary)] px-4 rounded-2xl hover:bg-[var(--primary-darker)] transition"
+                onClick={async () => {
+                  await checkVoucher(details.voucher);
+                }}
+              >
+                Aplică
+              </button>
+            </div>
+            {voucherError ? (
+              <span className="text-sm text-red-600 mt-1 inline-block">
+                {voucherError}
+              </span>
+            ) : (
+              discountPercent > 0 && (
+                <span className="text-sm text-green-600 mt-1 inline-block">
+                  Voucher aplicat: {discountPercent}% reducere
+                </span>
+              )
+            )}
           </label>
 
           <button
             type="submit"
-            className="mt-6 w-full bg-[var(--primary)] text-[var(--secondary)] p-4 rounded-3xl font-medium hover:bg-[var(--primary-darker)] transition disabled:opacity-50"
+            className="mt-6 w-full bg-[var(--primary)] text-[var(--secondary)] p-4 rounded-2xl font-medium hover:bg-[var(--primary-darker)] transition disabled:opacity-50"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Se procesează..." : "Trimite comanda"}

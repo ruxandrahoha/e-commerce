@@ -1,19 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function Layout() {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-
-      <main className="flex-1 px-30 pt-8 pb-16 bg-(--secondary)">
+      <main className="flex-grow px-8 pt-8 pb-12 bg-[var(--secondary)]">
         <Outlet />
       </main>
-
-      <footer className="bg-(--primary) text-white text-center p-6">
-        <p className="">© Ruxandra Hoha 2025</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
