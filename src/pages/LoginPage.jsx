@@ -41,7 +41,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex justify-center h-full">
+    <div className="flex justify-center h-full pt-20 pb-10">
       <div className="w-1/3 my-auto border-2 border-(--secondary) p-4 rounded-4xl bg-white px-20 shadow-md">
         {message && (
           <div className="text-red-500 text-center mb-4">{message}</div>
@@ -79,14 +79,11 @@ export default function LoginPage() {
           <Link to="/register">
             <button
               type="button"
-              className="w-full mx-auto bg-(--primary) text-white py-2 rounded-4xl shadow-md hover:bg-(--primary-darker) transition cursor-pointer"
+              className="w-full mb-3 mx-auto bg-(--primary) text-white py-2 rounded-4xl shadow-md hover:bg-(--primary-darker) transition cursor-pointer"
             >
               Creare cont
             </button>
           </Link>
-          <p className="text-center text-gray-600 hover:underline cursor-pointer">
-            Ti-ai uitat parola?
-          </p>
         </form>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import {
   FaFacebookF,
   FaInstagram,
@@ -15,10 +16,7 @@ export default function Footer() {
           <h3 className="font-semibold mb-1">Contact</h3>
           <p>
             Telefon:{" "}
-            <a
-              href="tel:+40123456789"
-              className="underline hover:text-gray-300"
-            >
+            <a href="tel:+40123456789" className="hover:text-gray-300">
               +40 123 456 789
             </a>
           </p>
@@ -29,17 +27,14 @@ export default function Footer() {
           <h3 className="font-semibold mb-2">Link-uri</h3>
           <ul>
             <li>
-              <a
-                href="/privacy-policy"
-                className="underline hover:text-gray-300"
-              >
-                Privacy Policy
-              </a>
+              <Link to="/privacy-policy" className="hover:text-gray-300">
+                Politică de confidențialitate
+              </Link>
             </li>
             <li>
-              <a href="/terms" className="underline hover:text-gray-300">
-                Terms & Conditions
-              </a>
+              <Link to="/terms-and-conditions" className="hover:text-gray-300">
+                Termeni și condiții
+              </Link>
             </li>
           </ul>
 

@@ -247,14 +247,14 @@ export default function Checkout() {
             <p>
               Subtotal: <span className="float-right">{totalPrice} lei</span>
             </p>
-            {!voucherError ? (
+            {discountPercent > 0 && !voucherError && (
               <p>
                 Reducere:
                 <span className="float-right">
-                  {-((totalPrice * 15) / 100).toFixed(2)} lei
+                  {-((totalPrice * discountPercent) / 100).toFixed(2)} lei
                 </span>
               </p>
-            ) : null}
+            )}
             <p>
               Taxă livrare: <span className="float-right">9.99 lei</span>
             </p>

@@ -24,6 +24,9 @@ import { CategoriesProvider } from "./context/CategoriesContext";
 import { ToastContainer } from "react-toastify";
 import AdminRoute from "./components/AdminRoute";
 import UserRoute from "./components/UserRoute";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ScrollToTop from "./components/ScrollToTop";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -33,6 +36,7 @@ createRoot(document.getElementById("root")).render(
           <CategoriesProvider>
             <ToastContainer position="bottom-right" autoClose={2500} />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
@@ -58,6 +62,11 @@ createRoot(document.getElementById("root")).render(
                     <Route path="orders" element={<OrdersPage />} />
                   </Route>
 
+                  <Route
+                    path="/terms-and-conditions"
+                    element={<TermsAndConditions />}
+                  />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>
