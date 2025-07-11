@@ -1,11 +1,11 @@
 import { Link } from "react-router";
 import {
-  HiFacebook,
-  HiInstagram,
-  HiTwitter,
-  HiLinkedin,
-  HiYoutube,
-} from "react-icons/hi2";
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
+  FaLinkedin,
+  FaYoutube,
+} from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -25,7 +25,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="p-2 bg-neutral-800 rounded-lg hover:bg-accent-700 transition-colors"
               >
-                <HiFacebook className="w-5 h-5" />
+                <FaFacebook className="w-5 h-5" />
               </a>
               <a
                 href="https://instagram.com"
@@ -33,7 +33,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="p-2 bg-neutral-800 rounded-lg hover:bg-accent-700 transition-colors"
               >
-                <HiInstagram className="w-5 h-5" />
+                <FaInstagram className="w-5 h-5" />
               </a>
               <a
                 href="https://twitter.com"
@@ -41,7 +41,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="p-2 bg-neutral-800 rounded-lg hover:bg-accent-700 transition-colors"
               >
-                <HiTwitter className="w-5 h-5" />
+                <FaTwitter className="w-5 h-5" />
               </a>
               <a
                 href="https://linkedin.com"
@@ -49,7 +49,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="p-2 bg-neutral-800 rounded-lg hover:bg-accent-700 transition-colors"
               >
-                <HiLinkedin className="w-5 h-5" />
+                <FaLinkedin className="w-5 h-5" />
               </a>
               <a
                 href="https://youtube.com"
@@ -57,7 +57,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="p-2 bg-neutral-800 rounded-lg hover:bg-accent-700 transition-colors"
               >
-                <HiYoutube className="w-5 h-5" />
+                <FaYoutube className="w-5 h-5" />
               </a>
             </div>
           </div>
