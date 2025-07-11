@@ -7,34 +7,54 @@ export default function Navbar() {
   const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <header className="bg-(--primary) flex justify-between items-center text-md px-4 shadow-md h-16">
-      <Link
-        className="text-(--secondary) text-xl font-semibold ml-20 hover:text-[#eaccc1]"
-        to="/"
-      >
-        Logo Librărie
-      </Link>
-      <nav className="py-6 mr-20">
-        <NavLink
-          className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:text-[#eaccc1]"
-          to="/products"
-        >
-          Produse
-        </NavLink>
-        <NavLink
-          className="group px-4 py-2 text-(--secondary) mx-2 font-medium hover:text-[#eaccc1]"
-          to="/cart"
-        >
-          Coș de cumpărături
-          {cart.length > 0 && (
-            <span className="bg-(--red) rounded-4xl ml-3 px-3 py-1 text-md group-hover:text-(--secondary)">
-              {totalQuantity}
-            </span>
-          )}
-        </NavLink>
+    <header className="bg-white/95 backdrop-blur-md border-b border-neutral-200 sticky top-0 z-50 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex justify-between items-center">
+          <Link
+            className="text-2xl font-bold warm-gradient-text hover:scale-105 transition-transform"
+            to="/"
+          >
+            📚 Librăria Modernă
+          </Link>
+          
+          <nav className="flex items-center space-x-8">
+            <NavLink
+              className={({ isActive }) =>
+                `nav-link font-medium transition-all ${
+                  isActive
+                    ? "text-primary-dark"
+                    : "text-neutral-700 hover:text-primary"
+                }`
+              }
+              to="/products"
+            >
+              Cărți
+            </NavLink>
+            
+            <NavLink
+              className={({ isActive }) =>
+                `nav-link font-medium transition-all relative ${
+                  isActive
+                    ? "text-primary-dark"
+                    : "text-neutral-700 hover:text-primary"
+                }`
+              }
+              to="/cart"
+            >
+              <span className="flex items-center space-x-2">
+                <span>Coș</span>
+                {cart.length > 0 && (
+                  <span className="bg-accent text-primary-dark text-sm font-bold px-2 py-1 rounded-full animate-pulse">
+                    {totalQuantity}
+                  </span>
+                )}
+              </span>
+            </NavLink>
 
-        <UserMenu />
-      </nav>
+            <UserMenu />
+          </nav>
+        </div>
+      </div>
     </header>
   );
 }
