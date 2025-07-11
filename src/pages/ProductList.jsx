@@ -54,8 +54,8 @@ export default function ProductList() {
         onClick={() => updateFilter(category.name)}
         className={`px-6 py-3 rounded-xl font-medium transition-all ${
           filter === category.name
-            ? "bg-primary text-white shadow-lg"
-            : "bg-white text-neutral-700 hover:bg-neutral-50 border border-neutral-200 hover:border-accent"
+            ? "bg-accent-700 text-white shadow-medium"
+            : "bg-white text-neutral-700 hover:bg-neutral-50 border border-neutral-200 hover:border-accent-300"
         }`}
       >
         {category.name}
@@ -93,12 +93,12 @@ export default function ProductList() {
     return (
       <div
         key={product.id}
-        className="product-card group max-w-sm mx-auto"
+        className="bg-white rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 overflow-hidden border border-neutral-100 hover:border-neutral-200 group"
       >
         <Link to={`/products/${product.id}`} className="block">
-          <div className="aspect-[3/4] overflow-hidden bg-neutral-50 rounded-t-2xl">
+          <div className="aspect-[3/4] overflow-hidden bg-neutral-50">
             <img
-              className="product-image w-full h-full object-cover"
+              className="w-full h-full object-cover"
               src={product.image}
               alt={`Coperta ${product.title}`}
             />
@@ -107,20 +107,20 @@ export default function ProductList() {
         
         <div className="p-6">
           <Link to={`/products/${product.id}`}>
-            <h3 className="font-semibold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors text-lg">
+            <h3 className="font-semibold text-neutral-900 mb-2 line-clamp-2 group-hover:text-accent-700 transition-colors">
               {product.title}
             </h3>
           </Link>
-          <p className="text-neutral-600 mb-4">de {product.author}</p>
+          <p className="text-sm text-neutral-600 mb-4">de {product.author}</p>
           
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold text-primary">{product.price} lei</span>
+            <span className="text-xl font-bold text-accent-700">{product.price} lei</span>
             
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <button
-                className={`p-3 rounded-xl transition-all ${
+                className={`p-2 rounded-lg transition-all ${
                   inWishlist
-                    ? "bg-error/10 text-error hover:bg-error/20"
+                    ? "bg-red-50 text-red-600 hover:bg-red-100"
                     : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
                 }`}
                 onClick={() => handleWishlistClick(product)}
@@ -133,10 +133,10 @@ export default function ProductList() {
               </button>
 
               <button
-                className={`flex items-center space-x-2 px-4 py-3 rounded-xl font-medium transition-all ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all ${
                   isAdded
-                    ? "bg-success text-white"
-                    : "bg-primary text-white hover:bg-primary-light"
+                    ? "bg-green-600 text-white"
+                    : "bg-accent-700 text-white hover:bg-accent-800"
                 }`}
                 onClick={() => handleAddToCart(product)}
               >
@@ -165,22 +165,22 @@ export default function ProductList() {
 
   if (!isValidFilter) {
     return (
-      <div className="flex flex-col justify-center items-center p-8 min-h-96">
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl font-bold text-neutral-800">Categoria nu există</h2>
+      <div className="flex flex-col justify-center items-center p-8 min-h-96 bg-primary-100">
+        <div className="text-center space-y-4 bg-white p-8 rounded-2xl shadow-medium">
+          <h2 className="text-3xl font-bold text-neutral-900">Categoria nu există</h2>
           <p className="text-neutral-600">Ne pare rău, categoria căutată nu a fost găsită.</p>
-          <GoBackBtn className="btn-primary" />
+          <GoBackBtn className="bg-accent-700 hover:bg-accent-800 text-white px-6 py-3 rounded-xl font-medium transition-colors" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-8 bg-primary-100">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-neutral-800 mb-4">
+          <h1 className="text-4xl font-bold text-neutral-900 mb-4">
             Descoperă cărțile noastre
           </h1>
           <p className="text-xl text-neutral-600">
@@ -194,8 +194,8 @@ export default function ProductList() {
             onClick={() => updateFilter("all")}
             className={`px-6 py-3 rounded-xl font-medium transition-all ${
               filter === "all"
-                ? "bg-primary text-white shadow-lg"
-                : "bg-white text-neutral-700 hover:bg-neutral-50 border border-neutral-200 hover:border-accent"
+                ? "bg-accent-700 text-white shadow-medium"
+                : "bg-white text-neutral-700 hover:bg-neutral-50 border border-neutral-200 hover:border-accent-300"
             }`}
           >
             Toate cărțile
@@ -207,8 +207,8 @@ export default function ProductList() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {filteredProducts.length === 0 ? (
             <div className="col-span-full text-center py-16">
-              <div className="space-y-4">
-                <h3 className="text-2xl font-semibold text-neutral-800">
+              <div className="space-y-4 bg-white p-8 rounded-2xl shadow-medium max-w-md mx-auto">
+                <h3 className="text-2xl font-semibold text-neutral-900">
                   Nu am găsit cărți în această categorie
                 </h3>
                 <p className="text-neutral-600">

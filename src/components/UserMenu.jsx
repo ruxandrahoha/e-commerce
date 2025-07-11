@@ -16,7 +16,7 @@ export default function UserMenu() {
   if (loggedUser) {
     return (
       <Popover className="relative">
-        <PopoverButton className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white border border-neutral-200 hover:border-accent hover:bg-neutral-50 transition-all font-medium text-neutral-700">
+        <PopoverButton className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white border border-neutral-200 hover:border-accent-300 hover:bg-neutral-50 transition-all font-medium text-neutral-700">
           <HiUser className="w-5 h-5" />
           <span className="hidden md:block">
             {loggedUser.displayName || "Utilizator"}
@@ -24,7 +24,7 @@ export default function UserMenu() {
           <HiChevronDown className="w-4 h-4" />
         </PopoverButton>
 
-        <PopoverPanel className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-neutral-200 p-2 z-50 animate-scale-in">
+        <PopoverPanel className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-large border border-neutral-200 p-2 z-50 animate-scale-in">
           {({ close }) => (
             <div className="space-y-1">
               <div className="px-4 py-3 border-b border-neutral-100">
@@ -40,7 +40,7 @@ export default function UserMenu() {
                     onClick={() => setDashboardOpen(!dashboardOpen)}
                     className={`w-full text-left px-4 py-2 rounded-lg transition-all font-medium ${
                       dashboardOpen
-                        ? "bg-primary text-white"
+                        ? "bg-accent-700 text-white"
                         : "text-neutral-700 hover:bg-neutral-100"
                     }`}
                   >
@@ -55,7 +55,7 @@ export default function UserMenu() {
                           setDashboardOpen(false);
                           close();
                         }}
-                        className="block px-4 py-2 text-sm text-neutral-600 hover:text-primary hover:bg-neutral-50 rounded-lg transition-all"
+                        className="block px-4 py-2 text-sm text-neutral-600 hover:text-accent-700 hover:bg-neutral-50 rounded-lg transition-all"
                       >
                         Comenzi
                       </Link>
@@ -65,7 +65,7 @@ export default function UserMenu() {
                           setDashboardOpen(false);
                           close();
                         }}
-                        className="block px-4 py-2 text-sm text-neutral-600 hover:text-primary hover:bg-neutral-50 rounded-lg transition-all"
+                        className="block px-4 py-2 text-sm text-neutral-600 hover:text-accent-700 hover:bg-neutral-50 rounded-lg transition-all"
                       >
                         Produse
                       </Link>
@@ -80,7 +80,7 @@ export default function UserMenu() {
                   setDashboardOpen(false);
                   close();
                 }}
-                className="block px-4 py-2 text-neutral-700 hover:text-primary hover:bg-neutral-100 rounded-lg transition-all font-medium"
+                className="block px-4 py-2 text-neutral-700 hover:text-accent-700 hover:bg-neutral-100 rounded-lg transition-all font-medium"
               >
                 Comenzile mele
               </Link>
@@ -91,13 +91,13 @@ export default function UserMenu() {
                   setDashboardOpen(false);
                   close();
                 }}
-                className="block px-4 py-2 text-neutral-700 hover:text-primary hover:bg-neutral-100 rounded-lg transition-all font-medium"
+                className="block px-4 py-2 text-neutral-700 hover:text-accent-700 hover:bg-neutral-100 rounded-lg transition-all font-medium"
               >
                 Lista de dorințe
               </Link>
 
               <div className="border-t border-neutral-100 pt-2">
-                <LogoutButton className="w-full text-left px-4 py-2 text-error hover:bg-error/10 rounded-lg transition-all font-medium" />
+                <LogoutButton className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-all font-medium" />
               </div>
             </div>
           )}
@@ -108,7 +108,7 @@ export default function UserMenu() {
 
   return (
     <Link
-      className="btn-primary"
+      className="bg-accent-700 hover:bg-accent-800 text-white px-6 py-2 rounded-xl font-medium transition-colors"
       to="/login"
     >
       Conectare
