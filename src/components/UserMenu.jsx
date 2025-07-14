@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import { IoChevronDown } from "react-icons/io5";
+import { HiChevronDown, HiUser } from "react-icons/hi2";
 import LogoutButton from "./LogoutButton";
 
 export default function UserMenu() {
@@ -15,88 +15,95 @@ export default function UserMenu() {
 
   if (loggedUser) {
     return (
-      <Popover className="relative inline-block">
-        <PopoverButton className="flex items-center gap-1 px-4 py-2 mx-2 font-semibold text-(--secondary) hover:text-[#eaccc1] cursor-pointer">
-          Bun venit, {loggedUser.displayName || "user"}!
-          <IoChevronDown size={20} />
+      <Popover className="relative">
+        <PopoverButton className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white border border-neutral-200 hover:border-accent-300 hover:bg-neutral-50 transition-all font-medium text-neutral-700">
+          <HiUser className="w-5 h-5" />
+          <span className="hidden md:block">
+            {loggedUser.displayName || "Utilizator"}
+          </span>
+          <HiChevronDown className="w-4 h-4" />
         </PopoverButton>
 
-        <PopoverPanel
-          as="div"
-          className="absolute right-0 mt-1 w-42 bg-white shadow-lg rounded-xl p-2 z-50 border-2 border-(--primary) font-semibold"
-        >
+        <PopoverPanel className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-large border border-neutral-200 p-2 z-50 animate-scale-in">
           {({ close }) => (
-            <>
+            <div className="space-y-1">
+              <div className="px-4 py-3 border-b border-neutral-100">
+                <p className="font-semibold text-neutral-900">
+                  {loggedUser.displayName || "Utilizator"}
+                </p>
+                <p className="text-sm text-neutral-600">{loggedUser.email}</p>
+              </div>
+
               {loggedUser?.isAdmin && (
-                <>
+                <div className="py-2">
                   <button
                     onClick={() => setDashboardOpen(!dashboardOpen)}
-                    className={`block w-full text-center px-4 py-2 rounded-md transition mb-2 ${
-                      dashboardOpen
-                        ? "bg-(--primary) text-(--secondary) hover:bg-(--primary-darker)"
-                        : "bg-(--secondary) text-(--primary)"
+                    className={`w-full text-left px-4 py-2 rounded-lg transition-all font-medium text-neutral-700 hover:bg-neutral-100 ${
+                      dashboardOpen ? "bg-neutral-100" : ""
                     }`}
                   >
-                    Dashboard
+                    Dashboard Admin
                   </button>
 
                   {dashboardOpen && (
-                    <ul className="px-2">
-                      <li>
-                        <Link
-                          to="/dashboard/orders"
-                          onClick={() => {
-                            setDashboardOpen(false);
-                            close();
-                          }}
-                          className="block w-full text-center px-4 py-2 bg-(--secondary) text-(--primary) hover:bg-(--primary) hover:text-(--secondary) rounded-md transition mb-2"
-                        >
-                          Comenzi
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/dashboard/products"
-                          onClick={() => {
-                            setDashboardOpen(false);
-                            close();
-                          }}
-                          className="block w-full text-center px-4 py-2 bg-(--secondary) text-(--primary) hover:bg-(--primary) hover:text-(--secondary) rounded-md transition mb-2"
-                        >
-                          Produse
-                        </Link>
-                      </li>
-                    </ul>
+                    <div className="ml-4 mt-2 space-y-1">
+                      <Link
+                        to="/dashboard/orders"
+                        onClick={() => {
+                          setDashboardOpen(false);
+                          close();
+                        }}
+                        className="block px-4 text-md py-1 text-neutral-600 hover:text-accent-700 hover:bg-neutral-50 rounded-lg transition-all"
+                      >
+                        Comenzi
+                      </Link>
+                      <Link
+                        to="/dashboard/products"
+                        onClick={() => {
+                          setDashboardOpen(false);
+                          close();
+                        }}
+                        className="block px-4 text-md py-1 text-neutral-600 hover:text-accent-700 hover:bg-neutral-50 rounded-lg transition-all"
+                      >
+                        Produse
+                      </Link>
+                    </div>
                   )}
-                </>
+                </div>
               )}
+
               <Link
                 to="/orders"
                 onClick={() => {
                   setDashboardOpen(false);
                   close();
                 }}
-                className="block w-full text-center p-2 bg-(--secondary) text-(--primary) hover:bg-(--primary) hover:text-(--secondary) rounded-md transition mb-2"
+                className="block px-4 py-2 text-neutral-700 hover:text-accent-700 hover:bg-neutral-100 rounded-lg transition-all font-medium"
               >
                 Comenzile mele
               </Link>
+
               <Link
                 to="/wishlist"
                 onClick={() => {
                   setDashboardOpen(false);
                   close();
                 }}
-                className="block w-full text-center px-4 py-2 bg-(--secondary) text-(--primary) hover:bg-(--primary) hover:text-(--secondary) rounded-md transition mb-2"
+                className="block px-4 py-2 text-neutral-700 hover:text-accent-700 hover:bg-neutral-100 rounded-lg transition-all font-medium"
               >
-                Wishlist
+                Lista de dorințe
               </Link>
-              <LogoutButton className="block w-full text-center px-4 py-2 bg-(--secondary) text-(--red) hover:bg-(--primary) hover:text-(--secondary) rounded-md transition cursor-pointer" />
-            </>
+
+              <div className="border-t border-neutral-100 pt-2">
+                <LogoutButton className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-all font-medium" />
+              </div>
+            </div>
           )}
         </PopoverPanel>
       </Popover>
     );
   }
+
   return (
     <Link
       className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:underline"

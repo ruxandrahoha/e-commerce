@@ -53,8 +53,10 @@ export default function ProductList() {
       <button
         key={category.id}
         onClick={() => updateFilter(category.name)}
-        className={`px-4 py-2 rounded-4xl shadow-md text-(--secondary) cursor-pointer transition hover:bg-(--primary-darker) ${
-          filter === category.name ? "bg-(--primary-darker) " : "bg-(--primary)"
+        className={`px-6 py-3 rounded-xl font-medium ${
+          filter === category.name
+            ? "bg-(--primary) text-white shadow-medium"
+            : "bg-white text-neutral-700  border border-neutral-200 hover:border-accent-300"
         }`}
       >
         {category.name}
@@ -91,7 +93,7 @@ export default function ProductList() {
     return (
       <div
         key={product.id}
-        className="w-64 bg-white m-2 p-4 rounded-4xl shadow-md hover:shadow-lg/25"
+        className="w-64 bg-white mx-2 my-4 p-4 rounded-xl shadow-md hover:shadow-lg/25"
       >
         <Link to={`/products/${product.id}`}>
           <img
@@ -146,29 +148,41 @@ export default function ProductList() {
   }
 
   return (
-    <div className="flex flex-col items-center mx-20">
-      <div className="flex gap-4 mb-4">
-        <button
-          onClick={() => updateFilter("all")}
-          className={`px-4 py-2 rounded-4xl shadow-md text-(--secondary) cursor-pointer transition hover:bg-(--primary-darker) ${
-            filter === "all" ? "bg-(--primary-darker) " : "bg-(--primary)"
-          }`}
-        >
-          Toate produsele
-        </button>
+    <div className="min-h-screen py-4 bg-primary-100">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-neutral-900 mb-4">
+            Descoperă cărțile noastre
+          </h1>
+          <p className="text-xl text-neutral-600">
+            Explorează colecția noastră vastă de cărți din toate genurile
+          </p>
+        </div>
 
-        {categoryElements}
-      </div>
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <button
+            onClick={() => updateFilter("all")}
+            className={`px-6 py-3 rounded-xl font-medium ${
+              filter === "all"
+                ? "bg-(--primary) text-white shadow-medium"
+                : "bg-white text-neutral-700  border border-neutral-200 hover:border-accent-300"
+            }`}
+          >
+            Toate cărțile
+          </button>
+          {categoryElements}
+        </div>
 
-      <div className="flex flex-col items-center">
-        <div className="flex flex-wrap justify-center items-center">
-          {filteredProducts.length === 0 ? (
-            <p className="text-xl font-serif mt-8">
-              Ne pare rău, nu există produse în această categorie.
-            </p>
-          ) : (
-            cardElements
-          )}
+        <div className="flex flex-col items-center">
+          <div className="flex flex-wrap justify-center items-center">
+            {filteredProducts.length === 0 ? (
+              <p className="text-xl font-serif mt-8">
+                Ne pare rău, nu există produse în această categorie.
+              </p>
+            ) : (
+              cardElements
+            )}
+          </div>
         </div>
       </div>
     </div>

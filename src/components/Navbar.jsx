@@ -7,34 +7,40 @@ export default function Navbar() {
   const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <header className="bg-(--primary) flex justify-between items-center text-md px-4 shadow-md h-16">
-      <Link
-        className="text-(--secondary) text-xl font-semibold ml-20 hover:text-[#eaccc1]"
-        to="/"
-      >
-        Logo Librărie
-      </Link>
-      <nav className="py-6 mr-20">
-        <NavLink
-          className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:text-[#eaccc1]"
-          to="/products"
-        >
-          Produse
-        </NavLink>
-        <NavLink
-          className="group px-4 py-2 text-(--secondary) mx-2 font-medium hover:text-[#eaccc1]"
-          to="/cart"
-        >
-          Coș de cumpărături
-          {cart.length > 0 && (
-            <span className="bg-(--red) rounded-4xl ml-3 px-3 py-1 text-md group-hover:text-(--secondary)">
-              {totalQuantity}
-            </span>
-          )}
-        </NavLink>
+    <header className="bg-(--primary) shadow-md sticky top-0 z-50 shadow-soft">
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex justify-between items-center">
+          <Link
+            className="font-serif text-2xl font-medium text-(--secondary) hover:text-[#a998b0] transition-colors"
+            to="/"
+          >
+            Librărie
+          </Link>
 
-        <UserMenu />
-      </nav>
+          <nav className="flex items-center space-x-12 gap-4">
+            <NavLink
+              className="px-4 py-2 text-(--secondary) mx-2 font-medium hover:text-[#eaccc1]"
+              to="/products"
+            >
+              Cărți
+            </NavLink>
+
+            <NavLink
+              className="group px-4 py-2 text-(--secondary) mx-2 font-medium hover:text-[#eaccc1]"
+              to="/cart"
+            >
+              Coș
+              {cart.length > 0 && (
+                <span className="bg-(--red) rounded-4xl ml-3 px-2 py-1 text-md group-hover:text-(--secondary)">
+                  {totalQuantity}
+                </span>
+              )}
+            </NavLink>
+
+            <UserMenu />
+          </nav>
+        </div>
+      </div>
     </header>
   );
 }

@@ -21,15 +21,21 @@ export default function Cart() {
 
   if (cart.length === 0) {
     return (
-      <div className="max-w-sm mx-auto text-center">
-        <p className="p-8 w-full text-3xl font-serif mt-20">
-          Coșul dvs. este gol.
-        </p>
-        <Link to="/products">
-          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl hover:bg-(--primary-darker) cursor-pointer">
-            Începe cumpărăturile
-          </button>
-        </Link>
+      <div className="min-h-150 flex items-center justify-center">
+        <div className="text-center bg-white p-8 sm:p-12 rounded-3xl shadow-lg max-w-md mx-4">
+          <div className="text-4xl sm:text-6xl mb-6">🛒</div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-4">
+            Coșul dvs. este gol
+          </h2>
+          <p className="text-neutral-600 mb-6 sm:mb-8 text-sm sm:text-base">
+            Adăugați câteva cărți pentru a începe
+          </p>
+          <Link to="/products">
+            <button className="bg-(--primary) hover:bg-(--primary-darker) cursor-pointer text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold transition-colors text-sm sm:text-base">
+              Începe cumpărăturile
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }

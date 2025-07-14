@@ -76,14 +76,15 @@ export default function LoginPage() {
           >
             Conectare
           </button>
-          <Link to="/register">
-            <button
-              type="button"
-              className="w-full mb-3 mx-auto bg-(--primary) text-white py-2 rounded-4xl shadow-md hover:bg-(--primary-darker) transition cursor-pointer"
+          <p className="text-neutral-600 text-center my-3">
+            Nu ai cont încă?{" "}
+            <Link
+              to="/register"
+              className="text-accent-700 hover:text-accent-800 font-semibold"
             >
-              Creare cont
-            </button>
-          </Link>
+              Creează unul aici
+            </Link>
+          </p>
         </form>
       </div>
     </div>

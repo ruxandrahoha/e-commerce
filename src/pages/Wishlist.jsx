@@ -25,15 +25,21 @@ export default function Wishlist() {
 
   if (wishlist.length === 0) {
     return (
-      <div className="max-w-md mx-auto text-center">
-        <p className="p-8 w-full text-3xl font-serif mt-20">
-          Lista de favorite este goală.
-        </p>
-        <Link to="/products">
-          <button className="bg-(--primary) text-(--secondary) px-6 py-3 rounded-4xl hover:bg-(--primary-darker) cursor-pointer">
-            Începe cumpărăturile
-          </button>
-        </Link>
+      <div className="min-h-150 bg-primary-100 flex items-center justify-center">
+        <div className="text-center bg-white p-12 rounded-3xl  shadow-lg max-w-md">
+          <div className="text-6xl mb-6">❤️</div>
+          <h2 className="text-2xl font-bold text-neutral-900 mb-4">
+            Lista de favorite este goală
+          </h2>
+          <p className="text-neutral-600 mb-8">
+            Salvează cărțile care îți plac pentru a le găsi mai ușor
+          </p>
+          <Link to="/products">
+            <button className="bg-(--primary) hover:bg-accent-800 text-white px-8 py-4 rounded-2xl font-semibold transition-colors">
+              Începe cumpărăturile
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }

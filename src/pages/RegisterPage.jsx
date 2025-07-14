@@ -4,6 +4,7 @@ import { registerUser } from "../firebase";
 import { FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import GoBackBtn from "../components/GoBackBtn";
 
 export default function RegisterPage() {
   const { loggedUser } = useAuth();
@@ -32,6 +33,7 @@ export default function RegisterPage() {
 
   return (
     <div className="flex justify-center h-full">
+      <GoBackBtn className="bg-white" />
       <div className="w-1/3 my-auto border-2 border-(--secondary) p-4 rounded-4xl bg-white px-20 shadow-md">
         <form className="flex flex-col gap-4 my-6">
           <label htmlFor="name" className="text-sm font-medium text-gray-700">
