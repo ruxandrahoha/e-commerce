@@ -155,7 +155,8 @@ export default function ProductList() {
             Descoperă cărțile noastre
           </h1>
           <p className="text-xl text-neutral-600">
-            Explorează colecția noastră vastă de cărți din toate genurile
+            Descoperă colecția noastră variată de cărți, potrivită pentru orice
+            tip de cititor
           </p>
         </div>
 

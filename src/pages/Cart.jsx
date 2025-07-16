@@ -59,7 +59,7 @@ export default function Cart() {
         {cart.map((item) => (
           <li
             key={item.id}
-            className="flex items-center border-2 border-(--secondary) p-4 rounded-4xl bg-white gap-4"
+            className="flex items-center border-2 border-(--secondary) p-4 rounded-xl bg-white gap-4"
           >
             <img
               src={item.image}
@@ -113,7 +113,7 @@ export default function Cart() {
 
             <div className="w-16 text-center">
               <button
-                className="bg-(--red) text-white px-3 py-2 rounded-4xl hover:bg-red-500 cursor-pointer"
+                className="bg-(--red) text-white px-2 py-1 rounded-4xl hover:bg-red-500 cursor-pointer"
                 onClick={() => removeFromCart(item.id)}
               >
                 ✕
@@ -132,7 +132,7 @@ export default function Cart() {
       </div>
       <button
         onClick={handleOrderClick}
-        className="flex justify-center bg-(--primary) rounded-4xl hover:bg-(--primary-darker) text-(--secondary) transition cursor-pointer m-auto py-2 px-16 text-xl"
+        className="flex justify-center bg-(--primary) rounded-2xl hover:bg-(--primary-darker) text-white transition cursor-pointer m-auto py-3 px-16 text-lg"
       >
         Plasează comanda
       </button>
