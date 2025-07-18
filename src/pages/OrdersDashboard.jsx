@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { listenToAllOrders, updateOrderStatus } from "../firebase";
 import Spinner from "../components/Spinner";
+import GoBack from "../components/GoBackBtn";
 
 export default function OrdersDashboard() {
   const [orders, setOrders] = useState([]);
@@ -25,7 +26,10 @@ export default function OrdersDashboard() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-xl font-bold mb-4">Toate comenzile plasate</h1>
+      <GoBack className="mb-4" />
+      <h1 className="text-2xl font-semibold text-[var(--primary)] mb-4">
+        Toate comenzile plasate
+      </h1>
 
       {orders.length === 0 ? (
         <p>Nu există comenzi.</p>

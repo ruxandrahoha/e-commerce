@@ -33,15 +33,15 @@ export default function RegisterPage() {
 
   return (
     <div className="flex justify-center h-full">
-      <GoBackBtn className="bg-white" />
-      <div className="w-1/3 my-auto border-2 border-(--secondary) p-4 rounded-4xl bg-white px-20 shadow-md">
+      <GoBackBtn className="max-h-10 mr-4 bg-white!" />
+      <div className="w-1/3 my-auto border-2 border-(--secondary) p-4 rounded-3xl bg-white px-20 shadow-md">
         <form className="flex flex-col gap-4 my-6">
           <label htmlFor="name" className="text-sm font-medium text-gray-700">
             Nume
             <input
               type="name"
               id="name"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl shadow-md"
               placeholder="Ion Popescu"
               onChange={(e) => setUser({ ...user, name: e.target.value })}
               required
@@ -53,7 +53,7 @@ export default function RegisterPage() {
             <input
               type="email"
               id="email"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl shadow-md"
               placeholder="you@example.com"
               onChange={(e) => setUser({ ...user, email: e.target.value })}
               required
@@ -68,7 +68,7 @@ export default function RegisterPage() {
             <input
               type="password"
               id="password"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl shadow-md"
               placeholder="••••••••"
               onChange={(e) => setUser({ ...user, password: e.target.value })}
               required
@@ -91,7 +91,7 @@ export default function RegisterPage() {
             <input
               type="password"
               id="confirmPassword"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-4xl shadow-md"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl shadow-md"
               placeholder="••••••••"
               onChange={(e) =>
                 setUser({ ...user, confirmPassword: e.target.value })
@@ -110,10 +110,10 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={!passwordOk}
-            className={`w-full mx-auto text-white py-2 mt-3 rounded-4xl shadow-md transition cursor-pointer 
+            className={`w-full mx-auto text-white py-2 mt-1 rounded-4xl shadow-md transition
                         ${
                           passwordOk
-                            ? "bg-(--primary) hover:bg-(--primary-darker)"
+                            ? "bg-(--primary) hover:bg-(--primary-darker) cursor-pointer"
                             : "bg-gray-500 cursor-not-allowed opacity-80"
                         }`}
             onClick={(e) => {

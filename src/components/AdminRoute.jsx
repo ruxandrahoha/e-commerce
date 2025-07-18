@@ -9,8 +9,12 @@ export default function AdminRoute() {
     return <Spinner />;
   }
 
-  if (!loggedUser || !loggedUser.isAdmin) {
+  if (!loggedUser) {
     return <Navigate to="/login" />;
+  }
+
+  if (!loggedUser.isAdmin) {
+    return <Navigate to="/" />;
   }
 
   return <Outlet />;

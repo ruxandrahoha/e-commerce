@@ -154,8 +154,8 @@ export async function addCategory() {
   }
 }
 
-export async function editCategoryName(id) {
-  const newName = prompt("Noul nume al categoriei:");
+export async function editCategoryName(id, currentName) {
+  const newName = prompt(`Noul nume al categoriei ${currentName}:`);
   if (!newName) return;
   try {
     const docRef = doc(db, "categories", id);

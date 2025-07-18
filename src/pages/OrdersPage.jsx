@@ -65,7 +65,7 @@ export default function OrdersPage() {
                         ? "text-green-500"
                         : order.status === "Anulata"
                         ? "text-red-500"
-                        : "text-gray-300"
+                        : "text-yellow-600"
                     }`}
                   >
                     {order.status}

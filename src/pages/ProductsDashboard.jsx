@@ -34,14 +34,16 @@ export default function ProductsDashboard() {
       <button
         key={category.id}
         onClick={() => setFilter(category.name)}
-        className={`flex gap-2 px-4 py-2 rounded-4xl shadow-md text-(--secondary) cursor-pointer transition hover:bg-(--primary-darker) ${
-          filter === category.name ? "bg-(--primary-darker) " : "bg-(--primary)"
+        className={`flex gap-2 px-5 py-3 rounded-2xl font-medium hover:bg-(--primary) hover:text-white cursor-pointer shadow-md ${
+          filter === category.name
+            ? "bg-(--primary) text-white"
+            : "bg-white text-neutral-700"
         }`}
       >
         {category.name}
         {filter === category.name ? (
           <div className="flex gap-2">
-            <span onClick={() => editCategoryName(category.id)}>
+            <span onClick={() => editCategoryName(category.id, category.name)}>
               <TbPencil className="text-2xl bg-(--red) text-(--secondary) rounded-4xl p-1 hover:bg-red-600" />
             </span>
             <span onClick={() => deleteCategory(category.id, category.name)}>
@@ -96,13 +98,15 @@ export default function ProductsDashboard() {
   }
 
   return (
-    <>
+    <div className="min-h-150 mx-50">
       <div className="flex flex-col items-center mx-20">
         <div className="flex gap-4 mb-4">
           <button
             onClick={() => setFilter("all")}
-            className={`px-4 py-2 rounded-4xl shadow-md text-(--secondary) cursor-pointer transition hover:bg-(--primary-darker) ${
-              filter === "all" ? "bg-(--primary-darker) " : "bg-(--primary)"
+            className={`px-5 py-3 rounded-2xl font-medium hover:bg-(--primary) hover:text-white cursor-pointer shadow-md ${
+              filter === "all"
+                ? "bg-(--primary) text-white"
+                : "bg-white text-neutral-700"
             }`}
           >
             Toate produsele
@@ -112,7 +116,7 @@ export default function ProductsDashboard() {
             onClick={() => addCategory()}
             className="px-4 py-2 rounded-4xl shadow-md cursor-pointer transition hover:bg-(--primary-darker) bg-(--primary)"
           >
-            <IoMdAdd className="text-xl text-(--secondary)" />
+            <IoMdAdd className="text-2xl text-(--secondary)" />
           </button>
         </div>
       </div>
@@ -129,6 +133,6 @@ export default function ProductsDashboard() {
           {cardElements}
         </div>
       </div>
-    </>
+    </div>
   );
 }

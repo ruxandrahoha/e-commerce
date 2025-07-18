@@ -53,10 +53,10 @@ export default function ProductList() {
       <button
         key={category.id}
         onClick={() => updateFilter(category.name)}
-        className={`px-6 py-3 rounded-xl font-medium ${
+        className={`px-6 py-3 rounded-2xl font-medium hover:bg-(--primary) hover:text-white cursor-pointer shadow-md ${
           filter === category.name
-            ? "bg-(--primary) text-white shadow-medium"
-            : "bg-white text-neutral-700  border border-neutral-200 hover:border-accent-300"
+            ? "bg-(--primary) text-white"
+            : "bg-white text-neutral-700"
         }`}
       >
         {category.name}
@@ -163,10 +163,10 @@ export default function ProductList() {
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           <button
             onClick={() => updateFilter("all")}
-            className={`px-6 py-3 rounded-xl font-medium ${
+            className={`px-6 py-3 rounded-2xl font-medium hover:bg-(--primary) hover:text-white cursor-pointer shadow-md ${
               filter === "all"
-                ? "bg-(--primary) text-white shadow-medium"
-                : "bg-white text-neutral-700  border border-neutral-200 hover:border-accent-300"
+                ? "bg-(--primary) text-white"
+                : "bg-white text-neutral-700"
             }`}
           >
             Toate cărțile

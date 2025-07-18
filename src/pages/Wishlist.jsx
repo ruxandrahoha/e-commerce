@@ -46,7 +46,7 @@ export default function Wishlist() {
 
   return (
     <div className="flex flex-col items-center mx-20">
-      <h1 className="text-2xl my-6 font-serif">Produsele tale favorite</h1>
+      <h1 className="text-3xl my-6 font-bold">Produsele tale favorite</h1>
       <div className="flex flex-wrap justify-center items-center">
         {wishlist.map((product) => {
           console.log("Wishlist product image URL:", product.image);
