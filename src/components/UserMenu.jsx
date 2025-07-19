@@ -42,7 +42,7 @@ export default function UserMenu() {
                       dashboardOpen ? "bg-neutral-100" : ""
                     }`}
                   >
-                    Dashboard Admin
+                    Dashboard
                   </button>
 
                   {dashboardOpen && (
